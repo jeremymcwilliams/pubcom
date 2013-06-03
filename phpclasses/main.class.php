@@ -1,5 +1,7 @@
 <?php
 
+
+
 /* class pubcomda has interface elements*/
 /* utilities has all the processing code */
 
@@ -8,15 +10,16 @@ class pubcomda extends utilities{
 	const parentdir = 'Desktop';
 	const usageTerms = "All Rights Reserved. No use without prior authorization.";
 	const copyrightNotice = "Copyright Lewis & Clark, Portland, Oregon.";
-	
+
+
 	function __construct(){
 		date_default_timezone_set("America/Los_Angeles");
 putenv("MAGICK_HOME=/opt/local/var/macports/software/ImageMagick");
 putenv("PATH=" . getenv("MAGICK_HOME") . "/bin:" . getenv("PATH"));
 putenv("DYLD_LIBRARY_PATH=" . getenv("MAGICK_HOME") . "/lib");
 
-
-
+        $this->setCollections();
+        var_dump($this->collections);
 
 		$this->controller();
 
@@ -47,6 +50,14 @@ putenv("DYLD_LIBRARY_PATH=" . getenv("MAGICK_HOME") . "/lib");
 		}
 	}
 	
+
+    function setCollections(){
+           
+        include ("collections.inc");
+        $this->collections=$collections;          
+        
+    }
+
 
 	function start(){
 		
@@ -141,19 +152,23 @@ putenv("DYLD_LIBRARY_PATH=" . getenv("MAGICK_HOME") . "/lib");
 
 			if ($md_array=$this->metadataDotTextCheck($directory)){
 				
-				$a=$this->md_parse($md_array);
+				//$a=$this->md_parse($md_array);
 				//var_dump($a);
 
 			//var_dump($a);
 			
 			$keys=array();	
 			$ex_array=array();
-				
+			$dir= pubcomda::parentdir."/$directory";	
 			if ($handle = opendir($dir)) {
 
 			    while (false !== ($entry = readdir($handle))) {
 			        if ($entry != "." && $entry != ".." && $entry != ".DS_Store" && $entry !="metadata.txt") {
 			        	echo "$entry<br>";
+
+
+
+
 						
 						$orig=$entry;
 						$b=explode(".", $entry);
@@ -234,6 +249,10 @@ putenv("DYLD_LIBRARY_PATH=" . getenv("MAGICK_HOME") . "/lib");
 
 
 class utilities{
+    
+    
+    
+    
 	
 	
 	function metadataDotTextCheck($directory){
@@ -450,6 +469,12 @@ original image resolution must be obtained/calculated
 		  empty($fields);		
 		
 	}
+    
+    
+    
+    
+    
+    
 		
 }
 
