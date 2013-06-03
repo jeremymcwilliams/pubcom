@@ -3,7 +3,7 @@
 /* class pubcomda has interface elements*/
 /* utilities has all the processing code */
 
-class pubcomda extends utilities{
+class pubcomda extends utilities{ 
 	
 	const parentdir = 'Desktop';
 	const usageTerms = "All Rights Reserved. No use without prior authorization.";
@@ -35,8 +35,8 @@ putenv("DYLD_LIBRARY_PATH=" . getenv("MAGICK_HOME") . "/lib");
 				break;
 			
 			case "processDirectory":
-				//$this->processDirectory();
-                $this->convertImages($_REQUEST["directory"]);
+				$this->processDirectory();
+                //$this->convertImages($_REQUEST["directory"]);
                 
 				break;
                 
