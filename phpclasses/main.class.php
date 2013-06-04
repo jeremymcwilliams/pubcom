@@ -19,7 +19,7 @@ putenv("PATH=" . getenv("MAGICK_HOME") . "/bin:" . getenv("PATH"));
 putenv("DYLD_LIBRARY_PATH=" . getenv("MAGICK_HOME") . "/lib");
 
         $this->setCollections();
-        var_dump($this->collections);
+        //var_dump($this->collections);
 
 		$this->controller();
 
@@ -112,18 +112,17 @@ putenv("DYLD_LIBRARY_PATH=" . getenv("MAGICK_HOME") . "/lib");
                         $pre=$x[0];
                         $newfile=$pre.".jpg";
                         
+                        $orig="/Library/WebServer/Documents/pubcom/$dir/$entry";
+                        
+                        $dest="/Library/WebServer/Documents/pubcom/".pubcomda::parentdir."/converted/$newfile";
+                        echo "<p>$orig</p>";
+                        
                         
                         $command="convert $entry -resize 50% -quality 100 ../converted/$newfile";
-                    
+                    $command="convert $orig -resize 50% -quality 100 $dest";
                         echo "$command<br>";
                         //exec($command, $output, $return);
-        
-        
-        
-        
-        
-            
-                  
+
                         $c++;
 
                         
@@ -152,7 +151,7 @@ putenv("DYLD_LIBRARY_PATH=" . getenv("MAGICK_HOME") . "/lib");
 
 			if ($md_array=$this->metadataDotTextCheck($directory)){
 				
-				//$a=$this->md_parse($md_array);
+				$a=$this->md_parse($md_array);
 				//var_dump($a);
 
 			//var_dump($a);
@@ -266,14 +265,90 @@ class utilities{
 			}
 			else{return false;}			
 
-	}	
+	}
+    
+    function parseFilename($file){
+        
+        $x=explode("-", $file);
+        
+        $f=$x[0];
+
+        
+        switch($f){
+            
+            case "L":
+            case "G":
+            
+            $suffix=$x[1];
+                
+            $key=$f."-".$suffix;
+            $sub=$x[2];
+            
+                
+            break;
+                
+            default:
+            $key=$x[0];
+            $sub=$x[1];
+            
+            
+            break;    
+            
+            
+            
+            
+        }
+        $c=strlen($sub);
+                echo "$key $sub $c";
+        switch ($c){
+            case 1:
+            
+            $val=$this->collections[$key][$sub];
+                echo "<p>$c $val</p>";
+            
+            
+            break;
+
+            case 2:
+                $one=$sub[0];
+                $two=$sub[1];
+                $val=$this->collections[$key][$one][$two];
+                
+                
+            break;     
+                
+            case 3:
+                $one=$sub[0];
+                $two=$sub[1];
+                $three=$sub[2];
+                $val=$this->collections[$key][$one][$two][$three];                                                
+                        
+                    
+                
+                
+            
+            
+        }
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    }
+    
+    	
 	
 
 	function md_parse($md){
 		
 		$csv_prep=array();
 		
-		
+		$coll_array=array();
+
 		foreach ($md as $entry){
 			
 			$c=0;
@@ -291,6 +366,9 @@ class utilities{
 					else{$key=$value;}
 					if ($key){
 					echo "<p>key: $value</p>";
+                        
+                        $this->parseFilename($value);
+                        
 						$csv_prep[$key]["Filename"]=$value;
 						
 					}
@@ -298,7 +376,7 @@ class utilities{
 				else{
 					if ($key){
 						
-						echo "<p>$c $field: $value</p>";
+						//echo "<p>$c $field: $value</p>";
 						
 						
 						
