@@ -115,7 +115,7 @@ putenv("DYLD_LIBRARY_PATH=" . getenv("MAGICK_HOME") . "/lib");
                         $orig="/Library/WebServer/Documents/pubcom/$dir/$entry";
                         
                         $dest="/Library/WebServer/Documents/pubcom/".pubcomda::parentdir."/converted/$newfile";
-                        echo "<p>$orig</p>";
+                       // echo "<p>$orig</p>";
                         
                         
                         $command="convert $entry -resize 50% -quality 100 ../converted/$newfile";
@@ -146,6 +146,7 @@ putenv("DYLD_LIBRARY_PATH=" . getenv("MAGICK_HOME") . "/lib");
 		
 		if (isset($_REQUEST["directory"]) && !empty($_REQUEST["directory"])){
 			$directory=$_REQUEST["directory"];
+			$this->directory=$directory;
 
 			//echo $directory;
             /* gets metadata array from metadata.txt*/
@@ -438,37 +439,7 @@ class utilities{
 	}
 
 
-    function collectionArrayParse($array){
 
-           
-                
-           foreach ($array as $a=>$b){
-                       
-               echo "<p>Collection: $a</p>";    
-               
-               foreach ($b as $c=>$d){
-                       echo "<p>$c: $d</p>";
-                   
-                   
-               }
-               
-               
-               
-                echo "<hr>";   
-                   
-                   
-                   
-               
-           }     
-                
-            
-            
-            
-        
-        
-        
-        
-    }
 
 
 
@@ -589,21 +560,95 @@ original image resolution must be obtained/calculated
 		
 	}
 
-	function writeCSV(){
+
+    function collectionArrayParse($array){
+
+           
+                
+           foreach ($array as $collection=>$data){
+                       
+               echo "<p>Collection: $collection</p>";    
+               $this->writeCSV($data, $collection);
+
+
+                echo "<hr>";   
+                   
+
+           }     
+
+    }
+
+
+
+
+
+
+	function writeCSV($array, $collection){
+			
+			//$fields=array();
+			$directory=$this->directory;
+			
+			
+			
+		$dir= pubcomda::parentdir;
+		$usageterms=pubcomda::usageTerms;
+		$copyright=pubcomda::copyrightNotice;
 		
-		$csv="nameoffile.csv";
+		$csv=$collection."_".$directory.".csv";
+		echo "<p>$csv</p>";
+		$path="$dir/OmekaCSVfiles/$csv";
 		
-		$headings=array("Filename", "Shoot", "Keywords", "Instructions", "Date", "Photographer", "City", "State/Province", 
-		"Country", "Usage Terms", "Copyright Notice", "Rating", "File Type", "File Size", "file");
-		$fp = fopen($csv, 'w+');
-	  array_push($fields, $title);
-	  array_push($fields, $subject);
-	  /*...*/		
+		echo count($array);	
 		
-	      fputcsv($fp, $fields);
+		$fp = fopen($path, 'w+');
+		
+			
+		$headings=array("Dublin Core:Title", "Item Type Metadata:Shoot", "Item Type Metadata:Keywords", "Item Type Metadata:Instructions", "Item Type Metadata:Date", "Item Type Metadata:Photographer", "Item Type Metadata:City", "Item Type Metadata:State/Province", 
+		"Item Type Metadata:Country", "Item Type Metadata:Usage Terms", "Item Type Metadata:Copyright Notice", "Item Type Metadata:Rating", "Dublin Core:Type", "Item Type Metadata:File Size", "file");
+		
+		fputcsv($fp, $headings);
+		
+		
+		foreach ($array as $key=>$md){
+			
+			$fields=array();
+			
+			array_push($fields, $md["Filename"]);
+			array_push($fields, $md["Shoot"]);
+			array_push($fields, $md["Keywords"]);
+			array_push($fields, $md["Instructions"]);
+			array_push($fields, $md["Date"]);
+			array_push($fields, $md["Photographer"]);
+			array_push($fields, $md["City"]);
+			array_push($fields, $md["State/Province"]);
+			array_push($fields, $md["Country"]);
+			array_push($fields, $usageterms);
+			array_push($fields, $copyright);
+			array_push($fields, $md["Rating"]);
+			array_push($fields, $md["File Type"]);
+			array_push($fields, $md["Dimensions"]);
+			$filepath="http://pubcomda.lclark.edu/tempfiles/".$md["Filename"].".jpg";
+			array_push($fields, $filepath);
+			//var_dump($md);
+			
+			
+			fputcsv($fp, $fields);
+			
+		}
+ //empty($fields);
+		
+		
+		
+		/*
+		
+	 // array_push($fields, $title);
+	 // array_push($fields, $subject);
+	  		
+		
+	      
 		  
-		  empty($fields);		
-		
+		 		
+		*/
 	}
     
 
