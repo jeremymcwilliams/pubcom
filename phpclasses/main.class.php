@@ -148,78 +148,78 @@ putenv("DYLD_LIBRARY_PATH=" . getenv("MAGICK_HOME") . "/lib");
 			$directory=$_REQUEST["directory"];
 
 			//echo $directory;
-
+            /* gets metadata array from metadata.txt*/
 			if ($md_array=$this->metadataDotTextCheck($directory)){
 				
-				$a=$this->md_parse($md_array);
-				//var_dump($a);
+        				$a=$this->md_parse($md_array);
+        				//var_dump($a);
+        
+        			//var_dump($a);
+        			
+        			
+        			/* gets exifdata from directory    */
+        			
+        			$keys=array();	
+        			$ex_array=array();
+        			
+        			
+        			
+        			$dir= pubcomda::parentdir."/$directory";	
+        			if ($handle = opendir($dir)) {
+        
+        			    while (false !== ($entry = readdir($handle))) {
+        			        if ($entry != "." && $entry != ".." && $entry != ".DS_Store" && $entry !="metadata.txt") {
+        			        	echo "$entry<br>";
 
-			//var_dump($a);
-			
-			$keys=array();	
-			$ex_array=array();
-			$dir= pubcomda::parentdir."/$directory";	
-			if ($handle = opendir($dir)) {
+        						$orig=$entry;
+        						$b=explode(".", $entry);
+        						$k=$b[0];
+        						$fileType=$b[1];
+        						array_push($keys,$k);
+        						
+        						$collinfo=$this->getFileCollection($k);
+                                $full=$collinfo["full"];
+                                
+                                
+                                
+        						/* change this so rather than creating a new array, it adds to the pre-existing metadata array*/
+        						/* need a function to generate collection key (i.e. "ATH-A") from filename*/
+                                
+                                
+        						$dim=$this->exiftooldata($entry, $directory);
+        						
+        						$ex_array[$k]["Dimensions"]=$dim;
+        						$ex_array[$k]["Archive File"]=$entry;
+        						$ex_array[$k]["File Type"]=$fileType;
 
-			    while (false !== ($entry = readdir($handle))) {
-			        if ($entry != "." && $entry != ".." && $entry != ".DS_Store" && $entry !="metadata.txt") {
-			        	echo "$entry<br>";
+        			        }
+        			        		
+        			        	
+        			        
+        			    }
+        			
+        			
+        			
+        			    closedir($handle);
+        			}			
+        			
+        			asort($a);
+        			asort($ex_array);			
+        
+        			
+        			var_dump($a);
+        			
+        			foreach ($keys as $k){
+        				
+        
+        				
+        				$d=$ex_array[$k]["Dimensions"];
+        				$shoot=$a[$k]["Shoot"];
+        				echo "<p>$d $shoot</p>";
+        				
+        				
+        			}				
 
-
-
-
-						
-						$orig=$entry;
-						$b=explode(".", $entry);
-						$k=$b[0];
-						$fileType=$b[1];
-						array_push($keys,$k);
-						
-						
-						$dim=$this->exiftooldata($entry, $directory);
-						
-						$ex_array[$k]["Dimensions"]=$dim;
-						$ex_array[$k]["Archive File"]=$entry;
-						$ex_array[$k]["File Type"]=$fileType;
-						
-						
-						
-						
-			        }
-			        		
-			        	
-			        
-			    }
-			
-			
-			
-			    closedir($handle);
-			}			
-			
-			asort($a);
-			asort($ex_array);			
-
-			
-			var_dump($a);
-			
-			foreach ($keys as $k){
-				
-
-				
-				$d=$ex_array[$k]["Dimensions"];
-				$shoot=$a[$k]["Shoot"];
-				echo "<p>$d $shoot</p>";
-				
-				
-			}				
-				
-				
-				
-				
-				
-				
-				
-				
 			}
 			else{
 				
@@ -229,9 +229,6 @@ putenv("DYLD_LIBRARY_PATH=" . getenv("MAGICK_HOME") . "/lib");
 			}
 			
 
-		
-			
-			
 			echo "<p><a href='index.php'>Start Again</a></p>";
 		}
 		
@@ -267,77 +264,72 @@ class utilities{
 
 	}
     
-    function parseFilename($file){
-        
-        $x=explode("-", $file);
-        
+    
+    
+    /* for a file name (no extension), like "CAM-B-0410-0023", returns array $array["prefix"]="CAM", $array["suffix"]="B", $array["full"]="CAM-B"*/
+    function getFileCollection($file){
+        $coll=array();
+         $x=explode("-", $file);
         $f=$x[0];
-
-        
         switch($f){
             
             case "L":
-            case "G":
-            
-            $suffix=$x[1];
-                
+            case "G":            
+            $suffix=$x[1];                
             $key=$f."-".$suffix;
-            $sub=$x[2];
-            
-                
+            $sub=$x[2];                
             break;
                 
             default:
             $key=$x[0];
             $sub=$x[1];
-            
-            
             break;    
-            
-            
-            
-            
+
         }
-        $c=strlen($sub);
-                echo "$key $sub $c";
+        $coll["prefix"]=$key;
+        $coll["suffix"]=$sub;
+        $coll["full"]="$key-$sub";
+        return $coll;        
+    }
+
+
+    /*Interprets the file convention, like "CAM-B-0410-0023"*/
+    function parseFilename($file){
+        
+        $z=$this->getFileCollection($file);
+        
+        $pre=$z["prefix"];
+        $suf=$z["suffix"];
+        $full=$z["full"];
+        
+        $c=strlen($suf);
+                //echo "$key $sub $c";
         switch ($c){
             case 1:
             
-            $val=$this->collections[$key][$sub];
-                echo "<p>$c $val</p>";
-            
-            
+            $val=$this->collections[$pre][$suf];
             break;
 
             case 2:
-                $one=$sub[0];
-                $two=$sub[1];
-                $val=$this->collections[$key][$one][$two];
+                $one=$suf[0];
+                $two=$suf[1];
+                $val=$this->collections[$pre][$one][$two];
                 
                 
             break;     
                 
             case 3:
-                $one=$sub[0];
-                $two=$sub[1];
-                $three=$sub[2];
-                $val=$this->collections[$key][$one][$two][$three];                                                
-                        
-                    
-                
-                
-            
-            
+                $one=$suf[0];
+                $two=$suf[1];
+                $three=$suf[2];
+                $val=$this->collections[$pre][$one][$two][$three];                                                
+
         }
         
         
-        
-        
-        
-        
-        
-        
-        
+        $r="$full||||$val";
+        return $r;
+
     }
     
     	
@@ -367,8 +359,16 @@ class utilities{
 					if ($key){
 					echo "<p>key: $value</p>";
                         
-                        $this->parseFilename($value);
+                        $r=$this->parseFilename($value);
+                        $k=explode("||||", $r);
+                        $coll=$k[0];
+                        if (!in_array($coll, $coll_array)){
+                           # array_push($coll_array, $coll);
+                            
+                        }
                         
+                        $coll_array[$coll][$key]["Filename"]=$value;
+
 						$csv_prep[$key]["Filename"]=$value;
 						
 					}
@@ -384,10 +384,12 @@ class utilities{
 							case "Title":   //title
 								//echo "<p>$field: $value</p>";
 								$csv_prep[$key]["Shoot"]=$value;
+                                $coll_array[$coll][$key]["Shoot"]=$value;
 								break;
 							
 							case "Contact Creator":
 								$csv_prep[$key]["Photographer"]=$value;
+                                $coll_array[$coll][$key]["Photographer"]=$value;
 								break;
 							
 							case "Keywords":
@@ -397,6 +399,7 @@ class utilities{
 							case "Country":
 							case "Rating":
 								$csv_prep[$key][$field]=$value;
+                                $coll_array[$coll][$key][$field]=$value;
 								break;
 							
 							default:
@@ -419,11 +422,47 @@ class utilities{
 			
 
 		}
-		
+		$this->collectionArrayParse($coll_array);
 		
 		return $csv_prep;
 		
 	}
+
+
+    function collectionArrayParse($array){
+
+           
+                
+           foreach ($array as $a=>$b){
+                       
+               echo "Collection: $a<br>";    
+               
+               foreach ($b as $c=>$d){
+                       echo "$c: $d<br>";
+                   
+                   
+               }
+               
+               
+               
+                echo "<hr>";   
+                   
+                   
+                   
+               
+           }     
+                
+            
+            
+            
+        
+        
+        
+        
+    }
+
+
+
 
 	
 	function parse_reports($filename){ 
@@ -547,6 +586,8 @@ original image resolution must be obtained/calculated
 		  empty($fields);		
 		
 	}
+    
+
     
     
     
