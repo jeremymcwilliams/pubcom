@@ -153,10 +153,7 @@ putenv("DYLD_LIBRARY_PATH=" . getenv("MAGICK_HOME") . "/lib");
 				
         				$a=$this->md_parse($md_array);
         				//var_dump($a);
-        
-        			//var_dump($a);
-        			
-        			
+
         			/* gets exifdata from directory    */
         			
         			$keys=array();	
@@ -169,7 +166,7 @@ putenv("DYLD_LIBRARY_PATH=" . getenv("MAGICK_HOME") . "/lib");
         
         			    while (false !== ($entry = readdir($handle))) {
         			        if ($entry != "." && $entry != ".." && $entry != ".DS_Store" && $entry !="metadata.txt") {
-        			        	echo "$entry<br>";
+        			        	//echo "$entry<br>";
 
         						$orig=$entry;
         						$b=explode(".", $entry);
@@ -183,14 +180,21 @@ putenv("DYLD_LIBRARY_PATH=" . getenv("MAGICK_HOME") . "/lib");
                                 
                                 
         						/* change this so rather than creating a new array, it adds to the pre-existing metadata array*/
-        						/* need a function to generate collection key (i.e. "ATH-A") from filename*/
-                                
-                                
-        						$dim=$this->exiftooldata($entry, $directory);
         						
-        						$ex_array[$k]["Dimensions"]=$dim;
-        						$ex_array[$k]["Archive File"]=$entry;
-        						$ex_array[$k]["File Type"]=$fileType;
+                                
+                                
+        						$exif=$this->exiftooldata($entry, $directory);
+        						
+        					//	$ex_array[$k]["Dimensions"]=$dim;
+        					//	$ex_array[$k]["Archive File"]=$entry;
+        					//	$ex_array[$k]["File Type"]=$fileType;
+								
+								$a[$full][$k]["Dimensions"]=$exif["Dimensions"];
+								$a[$full][$k]["Archive File"]=$entry;
+        						$a[$full][$k]["File Type"]=$fileType;
+								$a[$full][$k]["Date"]=$exif["Date"];
+								
+								
 
         			        }
         			        		
@@ -203,12 +207,14 @@ putenv("DYLD_LIBRARY_PATH=" . getenv("MAGICK_HOME") . "/lib");
         			    closedir($handle);
         			}			
         			
-        			asort($a);
-        			asort($ex_array);			
+        			//asort($a);
+        			//asort($ex_array);			
         
         			
-        			var_dump($a);
-        			
+        			//var_dump($a);
+					
+					$this->collectionArrayParse($a);
+        			/*
         			foreach ($keys as $k){
         				
         
@@ -218,7 +224,8 @@ putenv("DYLD_LIBRARY_PATH=" . getenv("MAGICK_HOME") . "/lib");
         				echo "<p>$d $shoot</p>";
         				
         				
-        			}				
+        			}
+					 * */				
 
 			}
 			else{
@@ -254,7 +261,7 @@ class utilities{
 	function metadataDotTextCheck($directory){
 			$dir= pubcomda::parentdir."/$directory";    
 			$md=$dir."/metadata.txt";
-			echo $md;
+			//echo $md;
 			
 			if (file_exists($md)){
 				$md_array=$this->parse_reports($md);
@@ -357,7 +364,7 @@ class utilities{
 					if (strlen($value)<10){$key=false;}
 					else{$key=$value;}
 					if ($key){
-					echo "<p>key: $value</p>";
+					//echo "<p>key: $value</p>";
                         
                         $r=$this->parseFilename($value);
                         $k=explode("||||", $r);
@@ -422,9 +429,11 @@ class utilities{
 			
 
 		}
-		$this->collectionArrayParse($coll_array);
+	//	$this->collectionArrayParse($coll_array);
 		
-		return $csv_prep;
+		//return $csv_prep;
+		
+		return $coll_array;
 		
 	}
 
@@ -435,10 +444,10 @@ class utilities{
                 
            foreach ($array as $a=>$b){
                        
-               echo "Collection: $a<br>";    
+               echo "<p>Collection: $a</p>";    
                
                foreach ($b as $c=>$d){
-                       echo "$c: $d<br>";
+                       echo "<p>$c: $d</p>";
                    
                    
                }
@@ -502,24 +511,27 @@ class utilities{
 	function formatDate($d){
 		
 		$d=trim($d,'" ');
-		echo $d."<br>";
+		//echo $d."<br>";
 		//ex: 2008:04:30 22:18:17
 		$x=explode(" ", $d);
 		
-		var_dump($x);
+		//var_dump($x);
 		$y=$x[0];
-		echo "<h1>$y</h1>";
+	//	echo "<h1>$y</h1>";
 		$z=explode(":",$y);
 		$yyyy=$z[0];
 		$mm=$z[1];
 		$dd=$z[2];
-		echo "<p>$mm $yyyy $dd</p>";
+	//	echo "<p>$mm $yyyy $dd</p>";
 		$date= date('F j, Y', mktime(0, 0, 0, $mm, $dd, $yyyy));
 		return $date;
 		
 	}
 
 	function exiftooldata($file, $folder){
+			$exif=array();
+			
+			
 		//$file="CAM-V-0905-0002.tif";
 		//$folder="HowardHallRaw";
 		$im=pubcomda::parentdir."/$folder/$file";
@@ -554,8 +566,15 @@ class utilities{
 		$wd=round($width/300, 2, PHP_ROUND_HALF_EVEN);
 		
 		$dim="$hd in. x $wd in.";
+		$exif["Dimensions"]=$dim;
+		
+		
 		$date=$this->formatDate($da);
-		return $date;
+		$exif["Date"]=$date;
+		
+		return $exif;
+		
+		//return $date;
 		//return $dim;
 		//echo $dim;
 		
