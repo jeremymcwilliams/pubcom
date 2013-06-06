@@ -336,7 +336,7 @@ class utilities{
         
         
         $r="$full||||$val";
-        return $r;
+        return $r; 
 
     }
     
