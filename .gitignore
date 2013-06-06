@@ -1,1 +1,6 @@
 Desktop
+*.lock
+*.DS_Store
+*.out
+ftpinfo.php
+

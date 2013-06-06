@@ -46,6 +46,11 @@ putenv("DYLD_LIBRARY_PATH=" . getenv("MAGICK_HOME") . "/lib");
             case "convertImages":
                 $this->convertImages($_REQUEST["directory"]);
                 break;
+                
+                
+            case "ftp":
+                $this->ftpConnect();
+                break; 
 
 		}
 	}
@@ -93,8 +98,17 @@ putenv("DYLD_LIBRARY_PATH=" . getenv("MAGICK_HOME") . "/lib");
 
 
 		
-		<?
+	
 
+		
+		        <form action="index.php">
+            
+            <input type="submit" value="try ftp">
+            <input type="hidden" name="state" value="ftp">
+        </form>
+		  <?
+		
+		
 	}
 	
 	
@@ -177,19 +191,10 @@ putenv("DYLD_LIBRARY_PATH=" . getenv("MAGICK_HOME") . "/lib");
         						
         						$collinfo=$this->getFileCollection($k);
                                 $full=$collinfo["full"];
-                                
-                                
-                                
-        						/* change this so rather than creating a new array, it adds to the pre-existing metadata array*/
-        						
-                                
+       
                                 
         						$exif=$this->exiftooldata($entry, $directory);
-        						
-        					//	$ex_array[$k]["Dimensions"]=$dim;
-        					//	$ex_array[$k]["Archive File"]=$entry;
-        					//	$ex_array[$k]["File Type"]=$fileType;
-								
+
 								$a[$full][$k]["Dimensions"]=$exif["Dimensions"];
 								$a[$full][$k]["Archive File"]=$entry;
         						$a[$full][$k]["File Type"]=$fileType;
@@ -215,18 +220,7 @@ putenv("DYLD_LIBRARY_PATH=" . getenv("MAGICK_HOME") . "/lib");
         			//var_dump($a);
 					
 					$this->collectionArrayParse($a);
-        			/*
-        			foreach ($keys as $k){
-        				
-        
-        				
-        				$d=$ex_array[$k]["Dimensions"];
-        				$shoot=$a[$k]["Shoot"];
-        				echo "<p>$d $shoot</p>";
-        				
-        				
-        			}
-					 * */				
+			
 
 			}
 			else{
@@ -242,6 +236,15 @@ putenv("DYLD_LIBRARY_PATH=" . getenv("MAGICK_HOME") . "/lib");
 		
 		echo "<p><a href='index.php'>Go back and pick a directory.</a></p>";
 		
+        ?>
+
+        
+        
+        <?
+        
+        
+        
+        
 	}
 
 
@@ -635,21 +638,41 @@ original image resolution must be obtained/calculated
 			fputcsv($fp, $fields);
 			
 		}
- //empty($fields);
-		
-		
-		
-		/*
-		
-	 // array_push($fields, $title);
-	 // array_push($fields, $subject);
-	  		
-		
-	      
-		  
-		 		
-		*/
+
 	}
+
+
+    /* FTP functions*/
+    function ftpConnect(){
+        
+        inlcude("ftpinfo.php");
+        
+        
+        $ftp_server = "library.lclark.edu";
+
+        // set up a connection or die
+        $conn_id = ftp_connect($ftp_server) or die("Couldn't connect to $ftp_server"); 
+        
+        
+        
+        
+        $login_result = ftp_login($conn_id, $ftp_user_name, $ftp_user_pass);
+        
+        // upload a file
+        if (ftp_put($conn_id, $remote_file, $file, FTP_ASCII)) {
+         echo "successfully uploaded $file\n";
+        } else {
+         echo "There was a problem while uploading $file\n";
+        }
+        
+        // close the connection
+        ftp_close($conn_id);
+
+
+
+
+        
+    }
     
 
     

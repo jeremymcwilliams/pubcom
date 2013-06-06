@@ -13,4 +13,13 @@ Uses the following:
 -imagemagick
 -html5 boilerplate
 
-Requires symbolic link to Desktop set in your local code directory
+
+Some Requirements:
+1) Symbolic link to Desktop set in your local code directory
+-this may require un-doing and re-doing the symbolic link on a local computer
+-in terminal, navigate to /Library/WebServer/Documents/pubcom/ and do the following:
+rm Desktop
+ln -s /Users/{username}/Desktop Desktop
+(replacing {username} with your real username)
+
+2) A writable directory on your Desktop called "OmekaCSVfiles"
