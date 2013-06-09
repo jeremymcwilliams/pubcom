@@ -58,7 +58,7 @@ putenv("DYLD_LIBRARY_PATH=" . getenv("MAGICK_HOME") . "/lib");
 
     function setCollections(){
            
-        include ("collections.inc");
+        include ("collections.php");
         $this->collections=$collections;          
         
     }
@@ -75,7 +75,7 @@ putenv("DYLD_LIBRARY_PATH=" . getenv("MAGICK_HOME") . "/lib");
 				<option value="">Pick a directory!</option>
 				
 
-			<?
+			<?php
 			$dir= pubcomda::parentdir;
 			 if ($handle = opendir($dir)) {
 			    while (false !== ($entry = readdir($handle))) {
@@ -106,7 +106,7 @@ putenv("DYLD_LIBRARY_PATH=" . getenv("MAGICK_HOME") . "/lib");
             <input type="submit" value="try ftp">
             <input type="hidden" name="state" value="ftp">
         </form>
-		  <?
+		  <?php
 		
 		
 	}
@@ -240,7 +240,7 @@ putenv("DYLD_LIBRARY_PATH=" . getenv("MAGICK_HOME") . "/lib");
 
         
         
-        <?
+        <?php
         
         
         
@@ -645,10 +645,10 @@ original image resolution must be obtained/calculated
     /* FTP functions*/
     function ftpConnect(){
         
-        inlcude("ftpinfo.php");
+       require_once("./ftpinfo.php");
         
         
-        $ftp_server = "library.lclark.edu";
+        
 
         // set up a connection or die
         $conn_id = ftp_connect($ftp_server) or die("Couldn't connect to $ftp_server"); 
@@ -667,21 +667,10 @@ original image resolution must be obtained/calculated
         
         // close the connection
         ftp_close($conn_id);
-
-
-
-
-        
+  
     }
     
-
-    
-    
-    
-    
-    
-    
+   
 		
 }
-
 ?>

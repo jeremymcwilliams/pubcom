@@ -1,4 +1,4 @@
-<?
+<?php
 
     $collections=array(
         "ATH"=>array(
