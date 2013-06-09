@@ -646,7 +646,7 @@ original image resolution must be obtained/calculated
     function ftpConnect(){
         
        require_once("./ftpinfo.php");
-        
+         
         
         
 
