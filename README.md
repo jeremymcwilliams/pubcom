@@ -23,3 +23,5 @@ ln -s /Users/{username}/Desktop Desktop
 (replacing {username} with your real username)
 
 2) A writable directory on your Desktop called "OmekaCSVfiles"
+
+3) A writable directory on your Desktop called "converted"

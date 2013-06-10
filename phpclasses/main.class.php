@@ -13,6 +13,7 @@ class pubcomda extends utilities{
 
 
 	function __construct(){
+	   
 		date_default_timezone_set("America/Los_Angeles");
 putenv("MAGICK_HOME=/opt/local/var/macports/software/ImageMagick");
 putenv("PATH=" . getenv("MAGICK_HOME") . "/bin:" . getenv("PATH"));
@@ -29,15 +30,21 @@ putenv("DYLD_LIBRARY_PATH=" . getenv("MAGICK_HOME") . "/lib");
 	function controller(){
 		
 		if (isset($_REQUEST["state"])){$state=$_REQUEST["state"];}
-		else{$state="start";}
+		else{$state="step1";}
 		
 		switch ($state){
 			
-			case "start":				
-				$this->start();
+			case "step1":				
+				$this->step1();
 				break;
 			
+            case "step2":
+                $this->step2();
+                break;
+            
+            
 			case "processDirectory":
+                $_SESSION["currentDirectory"]=$_REQUEST["directory"];
 				$this->processDirectory();
                 //$this->convertImages($_REQUEST["directory"]);
                 
@@ -62,17 +69,31 @@ putenv("DYLD_LIBRARY_PATH=" . getenv("MAGICK_HOME") . "/lib");
         $this->collections=$collections;          
         
     }
-
-
-	function start(){
+    
+    function step1(){
+        
+        ?>
+        
+        <h3>Step 1: Export Shoot Files and Metadata from Aperture to the Desktop</h3>
+        
+        
+        
+        
+        <?php
+        
+    }
+    
+	function step2(){
 		
 		?>
 		
-		<h3>Step One: Select a Directory from your Desktop</h3>
+		<h3>Step Two: Generate Omeka-ready CSV Files</h3>
 
+<p>Choose the directory containing your shoot export files and metadata.txt file.</p>
+            
 			<form action="index.php" method="post">
-			<select name="directory">
-				<option value="">Pick a directory!</option>
+			<select name="directory" id="expdir">
+				<option value="">Select Directory</option>
 				
 
 			<?php
@@ -93,7 +114,7 @@ putenv("DYLD_LIBRARY_PATH=" . getenv("MAGICK_HOME") . "/lib");
 			</select>
 			<input type="hidden" name="state" value="processDirectory">
 			
-			<input type="submit" value="select">
+			<p><input type="submit" value="Generate CSV Files" id="createCSV"></p>
 			</form>
 
 
@@ -101,151 +122,38 @@ putenv("DYLD_LIBRARY_PATH=" . getenv("MAGICK_HOME") . "/lib");
 	
 
 		
-		        <form action="index.php">
-            
-            <input type="submit" value="try ftp">
-            <input type="hidden" name="state" value="ftp">
-        </form>
+
 		  <?php
 		
 		
 	}
 	
 	
-	function convertImages($directory){
+	function photoshopInstructions(){
 	    
-            
-            $dir= pubcomda::parentdir."/$directory";
-                    
-            if ($handle = opendir($dir)) {
-                $c=0;
-                while (false !== ($entry = readdir($handle))) {
-                    if ($entry != "." && $entry != ".." && $entry != ".DS_Store" && $entry !="metadata.txt") {
-                        //echo "$entry<br>";
-                        $x=explode(".", $entry);
-                        $pre=$x[0];
-                        $newfile=$pre.".jpg";
-                        
-                        $orig="/Library/WebServer/Documents/pubcom/$dir/$entry";
-                        
-                        $dest="/Library/WebServer/Documents/pubcom/".pubcomda::parentdir."/converted/$newfile";
-                       // echo "<p>$orig</p>";
-                        
-                        
-                        $command="convert $entry -resize 50% -quality 100 ../converted/$newfile";
-                    $command="convert $orig -resize 50% -quality 100 $dest";
-                        echo "$command<br>";
-                        //exec($command, $output, $return);
-
-                        $c++;
-
-                        
-                    }
-                            
-                        
-                    
-                }
-            
-            
-            
-                closedir($handle);
-            }           
-                   
-        echo "<p><a href='index.php'>Start Again</a></p>";
-        
-	}
-    
-    
-	function processDirectory(){
-		
-		if (isset($_REQUEST["directory"]) && !empty($_REQUEST["directory"])){
-			$directory=$_REQUEST["directory"];
-			$this->directory=$directory;
-
-			//echo $directory;
-            /* gets metadata array from metadata.txt*/
-			if ($md_array=$this->metadataDotTextCheck($directory)){
-				
-        				$a=$this->md_parse($md_array);
-        				//var_dump($a);
-
-        			/* gets exifdata from directory    */
-        			
-        			$keys=array();	
-        			$ex_array=array();
-        			
-        			
-        			
-        			$dir= pubcomda::parentdir."/$directory";	
-        			if ($handle = opendir($dir)) {
-        
-        			    while (false !== ($entry = readdir($handle))) {
-        			        if ($entry != "." && $entry != ".." && $entry != ".DS_Store" && $entry !="metadata.txt") {
-        			        	//echo "$entry<br>";
-
-        						$orig=$entry;
-        						$b=explode(".", $entry);
-        						$k=$b[0];
-        						$fileType=$b[1];
-        						array_push($keys,$k);
-        						
-        						$collinfo=$this->getFileCollection($k);
-                                $full=$collinfo["full"];
-       
-                                
-        						$exif=$this->exiftooldata($entry, $directory);
-
-								$a[$full][$k]["Dimensions"]=$exif["Dimensions"];
-								$a[$full][$k]["Archive File"]=$entry;
-        						$a[$full][$k]["File Type"]=$fileType;
-								$a[$full][$k]["Date"]=$exif["Date"];
-								
-								
-
-        			        }
-        			        		
-        			        	
-        			        
-        			    }
-        			
-        			
-        			
-        			    closedir($handle);
-        			}			
-        			
-        			//asort($a);
-        			//asort($ex_array);			
-        
-        			
-        			//var_dump($a);
-					
-					$this->collectionArrayParse($a);
-			
-
-			}
-			else{
-				
-				echo "<p>There is no metadata.txt file in $directory. Please export a metadata file from Aperture to this directory, and make sure it is titled 'metadata.txt'.</p>";
-
-				
-			}
-			
-
-			echo "<p><a href='index.php'>Start Again</a></p>";
-		}
-		
-		echo "<p><a href='index.php'>Go back and pick a directory.</a></p>";
-		
         ?>
-
+        
+        <p>Now batch convert the images to jpegs using photoshop:</p>
+        <p>
+            <ul>
+                <li>Select Image processor from File->Scripts </li>
+                
+                
+            </ul>
+            
+            
+        </p>
+        
+        
         
         
         <?php
-        
-        
-        
-        
 	}
+	
+	
+
+    
+
 
 
 
@@ -258,7 +166,96 @@ putenv("DYLD_LIBRARY_PATH=" . getenv("MAGICK_HOME") . "/lib");
 class utilities{
     
     
-    
+    function processDirectory(){
+        
+        if (isset($_REQUEST["directory"]) && !empty($_REQUEST["directory"])){
+            $directory=$_REQUEST["directory"];
+            $this->directory=$directory;
+
+            //echo $directory;
+            /* gets metadata array from metadata.txt*/
+            if ($md_array=$this->metadataDotTextCheck($directory)){
+                
+                        $a=$this->md_parse($md_array);
+                        //var_dump($a);
+
+                    /* gets exifdata from directory    */
+                    
+                    $keys=array();  
+                    $ex_array=array();
+                    
+                    
+                    
+                    $dir= pubcomda::parentdir."/$directory";    
+                    if ($handle = opendir($dir)) {
+        
+                        while (false !== ($entry = readdir($handle))) {
+                            if ($entry != "." && $entry != ".." && $entry != ".DS_Store" && $entry !="metadata.txt") {
+                                //echo "$entry<br>";
+
+                                $orig=$entry;
+                                $b=explode(".", $entry);
+                                $k=$b[0];
+                                $fileType=$b[1];
+                                array_push($keys,$k);
+                                
+                                $collinfo=$this->getFileCollection($k);
+                                $full=$collinfo["full"];
+       
+                                
+                                $exif=$this->exiftooldata($entry, $directory);
+
+                                $a[$full][$k]["Dimensions"]=$exif["Dimensions"];
+                                $a[$full][$k]["Archive File"]=$entry;
+                                $a[$full][$k]["File Type"]=$fileType;
+                                $a[$full][$k]["Date"]=$exif["Date"];
+                                
+                                
+
+                            }
+                                    
+                                
+                            
+                        }
+                    
+                    
+                    
+                        closedir($handle);
+                    }           
+                    
+                    //asort($a);
+                    //asort($ex_array);         
+        
+                    
+                    //var_dump($a);
+                    
+                    $this->collectionArrayParse($a);
+            
+
+            }
+            else{
+                
+                echo "<p>There is no metadata.txt file in $directory. Please export a metadata file from Aperture to this directory, and make sure it is titled 'metadata.txt'.</p>";
+
+                
+            }
+            
+
+            echo "<p><a href='index.php'>Start Again</a></p>";
+        }
+        
+        echo "<p><a href='index.php'>Go back and pick a directory.</a></p>";
+        
+        ?>
+
+        
+        
+        <?php
+        
+        
+        
+        
+    }   
     
 	
 	
@@ -395,7 +392,10 @@ class utilities{
 							case "Title":   //title
 								//echo "<p>$field: $value</p>";
 								$csv_prep[$key]["Shoot"]=$value;
-                                $coll_array[$coll][$key]["Shoot"]=$value;
+                                
+                                $newdata=$this->formatShoot($value, $key);
+                                
+                                $coll_array[$coll][$key]["Shoot"]=$newdata;
 								break;
 							
 							case "Contact Creator":
@@ -441,12 +441,6 @@ class utilities{
 		
 	}
 
-
-
-
-
-
-
 	
 	function parse_reports($filename){ 
          
@@ -482,6 +476,25 @@ class utilities{
 
 	}
 	
+    function formatShoot($shoot, $title){
+        /* example: CAS 100609 Campus Details*/
+        $x=explode(" ", $shoot);
+        
+        $school=array_shift($x);
+        $shootdate=array_shift($x);
+        $desc=implode(" ", $x);
+        
+        $y=explode("-", $title);
+        $wrong=array_pop($y);
+        $date=array_pop($y);
+        
+        $new=$school."-".$date."-".$desc;
+        return $new;
+
+    }
+    
+    
+    
 	function formatDate($d){
 		
 		$d=trim($d,'" ');
@@ -497,7 +510,8 @@ class utilities{
 		$mm=$z[1];
 		$dd=$z[2];
 	//	echo "<p>$mm $yyyy $dd</p>";
-		$date= date('F j, Y', mktime(0, 0, 0, $mm, $dd, $yyyy));
+	   $date="$yyyy-$mm-$dd";
+		//$date= date('F j, Y', mktime(0, 0, 0, $mm, $dd, $yyyy));
 		return $date;
 		
 	}
@@ -512,7 +526,7 @@ class utilities{
 
 
 		
-		$command="exiftool -php -ImageWidth -ImageHeight -DateTimeOriginal $im";
+		$command="exiftool -php -ImageWidth -ImageHeight -DateTimeOriginal -MetadataDate $im";
 		
 		
 		exec($command, $output, $return);
@@ -571,14 +585,77 @@ original image resolution must be obtained/calculated
            foreach ($array as $collection=>$data){
                        
                echo "<p>Collection: $collection</p>";    
-               $this->writeCSV($data, $collection);
-
+               if ($csv=$this->writeCSV($data, $collection)){
+                   $path=$this->getCollectionPath($collection);
+                   echo "<p>File created: $csv<br>($path)</p>";
+                   
+                  
+                   
+                   
+               }
+                
 
                 echo "<hr>";   
                    
 
            }     
 
+    }
+    
+    function getCollectionPath($coll){
+                
+            
+        $collections=$this->collections;
+        $data=$this->getFileCollection($coll);
+        $pre=$data["prefix"];
+        $suf=$data["suffix"];
+        
+        $path="";
+        if ($collections[$pre]["parentlabel"]){
+            $path= $collections[$pre]["parentlabel"] ." -> ";
+            
+            
+        }
+
+        $r="";
+        $c=strlen($suf);
+                //echo "$key $sub $c";
+        switch ($c){
+            case 1:
+            
+            $r=$collections[$pre][$suf];
+            break;
+
+            case 2:
+                $one=$suf[0];
+                $two=$suf[1];
+                
+                $r=$collections[$pre][$one]["parentlabel"]. " -> ";
+                $r.=$collections[$pre][$one][$two];
+                
+                
+            break;     
+                
+            case 3:
+                $one=$suf[0];
+                $two=$suf[1];
+                $three=$suf[2];
+                 $r=$collections[$pre][$one]["parentlabel"]." -> ";
+                $r.=$collections[$pre][$one][$two]["parentlabel"]." -> ";
+ 
+                $r.=$collections[$pre][$one][$two][$three];                                                
+
+        }
+        $path.=$r;
+        
+        return $path;            
+        
+        
+        
+        
+        
+        
+        
     }
 
 
@@ -607,7 +684,7 @@ original image resolution must be obtained/calculated
 		
 			
 		$headings=array("Dublin Core:Title", "Item Type Metadata:Shoot", "Item Type Metadata:Keywords", "Item Type Metadata:Instructions", "Item Type Metadata:Date", "Item Type Metadata:Photographer", "Item Type Metadata:City", "Item Type Metadata:State/Province", 
-		"Item Type Metadata:Country", "Item Type Metadata:Usage Terms", "Item Type Metadata:Copyright Notice", "Item Type Metadata:Rating", "Dublin Core:Type", "Item Type Metadata:File Size", "file");
+		"Item Type Metadata:Country", "Item Type Metadata:Usage Terms", "Item Type Metadata:Copyright Notice", "Item Type Metadata:Rating", "Dublin Core:Type", "Item Type Metadata:Maximum File Dimensions (print)", "file");
 		
 		fputcsv($fp, $headings);
 		
@@ -638,12 +715,17 @@ original image resolution must be obtained/calculated
 			fputcsv($fp, $fields);
 			
 		}
+        if ($fp){return $csv;}
+        else{return false;}
 
 	}
 
 
     /* FTP functions*/
     function ftpConnect(){
+       
+       $directory= $_SESSION["currentDirectory"];
+       $dt=pubcomda::parentdir;
         
        require_once("./ftpinfo.php");
          
@@ -657,20 +739,92 @@ original image resolution must be obtained/calculated
         
         
         $login_result = ftp_login($conn_id, $ftp_user_name, $ftp_user_pass);
+        echo "<p>"/
+        $dir= "$dt/$directory"; 
+        echo $dir;   
+        /*
+        if ($handle = opendir($dir)) {
+
+            while (false !== ($entry = readdir($handle))) {
+                if ($entry != "." && $entry != ".." && $entry != ".DS_Store" && $entry !="metadata.txt") {
+                        
+                        $file="$dir/$entry";
+                        $remote_file="/pubcomda/raw/$entry";
+                      // upload a file
+                    if (ftp_put($conn_id, $remote_file, $file, FTP_ASCII)) {
+                     echo "successfully uploaded $file<br>";
+                    } else {
+                     echo "There was a problem while uploading $file. Use FireFTP!";
+                    }                              
+                    
+                    
+                }
+            
+            
+            
+            }
         
-        // upload a file
-        if (ftp_put($conn_id, $remote_file, $file, FTP_ASCII)) {
-         echo "successfully uploaded $file\n";
-        } else {
-         echo "There was a problem while uploading $file\n";
-        }
+        
+        
+        } 
+ */
+ echo "</p>";
+ 
+ 
+ 
+        
+
         
         // close the connection
         ftp_close($conn_id);
   
     }
-    
-   
+
+/*
+    function convertImages($directory){
+        
+            
+            $dir= pubcomda::parentdir."/$directory";
+                    
+            if ($handle = opendir($dir)) {
+                $c=0;
+                while (false !== ($entry = readdir($handle))) {
+                    if ($entry != "." && $entry != ".." && $entry != ".DS_Store" && $entry !="metadata.txt") {
+                        //echo "$entry<br>";
+                        $x=explode(".", $entry);
+                        $pre=$x[0];
+                        $newfile=$pre.".jpg";
+                        
+                        $orig="/Library/WebServer/Documents/pubcom/$dir/$entry";
+                        
+                        $dest="/Library/WebServer/Documents/pubcom/".pubcomda::parentdir."/converted/$newfile";
+                       // echo "<p>$orig</p>";
+                        
+                        
+                        $command="convert $entry -resize 50% -quality 100 ../converted/$newfile";
+                    $command="convert $orig -resize 50% -quality 100 $dest";
+                        echo "$command<br>";
+                        //exec($command, $output, $return);
+
+                        $c++;
+
+                        
+                    }
+                            
+                        
+                    
+                }
+            
+            
+            
+                closedir($handle);
+            }           
+                   
+        echo "<p><a href='index.php'>Start Again</a></p>";
+        
+    }
+        
+ */  
 		
 }
 ?>

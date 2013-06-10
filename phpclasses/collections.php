@@ -181,7 +181,7 @@
             )
         ),
         "L-CAM"=>array(
-            
+            "parentlabel"=>"Law Campus",
             "A"=>"Aerials",
             "B"=>"Ampitheatre",
             "C"=>"Architecture Details",
@@ -192,6 +192,7 @@
             "H"=>"Wood Hall"
          ),
         "L-PEO"=>array(
+        "parentlabel"=>"Law People",
             "A"=>"Group Portraits",
             "B"=>"Individual Portraits",
             "C"=> array( /* Students */
@@ -206,10 +207,12 @@
             "F"=>"Non Lewis and Clark People"
         ),
         "L-EVNT"=>array(
+            "parentlabel"=>"Law Events",
             "A"=>"Commencement",
             "B"=>"Receptions"            
         ),
         "L-MISC"=>array(
+            "parentlabel"=>"Law Miscellaneous",
             "A"=>"Objects",
             "B"=>array( /* Advocate Magazine*/
                 "parentlabel"=> "Advocate Magazine",
@@ -223,21 +226,25 @@
       
 
         "G-CAM"=>array(
+            "parentlabel"=>"Graduate Campus",
             "A"=>"Rogers Hall",
             "B"=>"Corbett House",
             "C"=>"South Campus Chapel",
             "D"=>"South Campus Landscapes"
         ),
         "G-DEPT"=>array(
+            "parentlabel"=>"Graduate Departments",
             "A"=>"Counseling Psychology",
             "B"=>"Educational Leadership",
             "C"=>"Teacher Education"
         
         ),
         "G-PROG"=>array(
+            "parentlabel"=>"Graduate Programs",
             "A"=>"Northwest Writing Institute"
         ),
         "G-PEO"=>array(
+            "parentlabel"=>"Graduate People",
             "A"=>"Group Portraits",
             "B"=>"Individual Portraits",
             "C"=>array( /*Students*/
@@ -248,10 +255,12 @@
             "D"=>"Non Lewis and Clark People"
         ),
         "G-EVNT"=>array(
+            "parentlabel"=>"Graduate Events",
             "A"=>"Commencement",
             "B"=>"Convocation"
         ),
         "G-MISC"=>array(
+            "parentlabel"=>"Graduate Miscellaneous",
             "A"=>array( /* Print Project */
                 "parentlabel"=> "Print Project",
                 "1"=>"GRAD Viewbook"

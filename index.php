@@ -1,3 +1,4 @@
+<?php  session_start();?>
 <?php include ("phpclasses/main.class.php");?>
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
@@ -23,17 +24,9 @@
         <![endif]-->
 
         <!-- Add your site or application content here -->
-        <p>Hello world! This is HTML5 Boilerplate.</p> 
-
-<?php
-echo "php";
-$x=new pubcomda();
+        
 
 
-
-
-
-?>
 
 
 
@@ -42,6 +35,29 @@ $x=new pubcomda();
         <script src="js/plugins.js"></script>
         <script src="js/main.js"></script>
 
+<div><h2>Aperture to Omeka Migration</h2></div>
+<div id="container">
+<div id='nav'>
+<nav>
+  <p><a href="index.php?state=step1">Step 1 - Export from Aperture</a></p>
+  <p><a href="index.php?state=step2">Step 2 - Generate CSV files</a></p>
+  <p><a href="/js/">Step 3 - Batch convert images</a></p>
+  <p><a href="/jquery/">Step 4 - FTP images</a></p>
+  <p><a href=''>Step 5 - CSV Files in Omeka</a></p>
+  <p><a href=''>Step 6 - Clear Desktop</a></p>
+  
+</nav>
+</div>
+<div id="main">
+    
+ <?php
+
+$x=new pubcomda();
+
+?>   
+    
+</div>
+</div>
 
 
 

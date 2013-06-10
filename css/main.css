@@ -16,6 +16,7 @@ input,
 select,
 textarea {
     color: #222;
+    
 }
 
 body {
@@ -23,6 +24,8 @@ body {
     line-height: 1.4;
     
     padding:10px;
+ 
+    padding-left:20px;
     
     
 }
@@ -302,3 +305,8 @@ textarea {
         page-break-after: avoid;
     }
 }
+
+#container{clear:both;}
+#nav{float:left; width:300px;}
+#main{float:left;}
+
