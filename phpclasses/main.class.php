@@ -197,7 +197,7 @@ putenv("DYLD_LIBRARY_PATH=" . getenv("MAGICK_HOME") . "/lib");
 		
 	}
 	
-	function step5(){
+	function step5(){ 
 		
 		
 		
