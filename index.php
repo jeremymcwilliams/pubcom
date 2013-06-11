@@ -41,10 +41,10 @@
 <nav>
   <p><a href="index.php?state=step1">Step 1 - Export from Aperture</a></p>
   <p><a href="index.php?state=step2">Step 2 - Generate CSV files</a></p>
-  <p><a href="/js/">Step 3 - Batch convert images</a></p>
-  <p><a href="/jquery/">Step 4 - FTP images</a></p>
-  <p><a href=''>Step 5 - CSV Files in Omeka</a></p>
-  <p><a href=''>Step 6 - Clear Desktop</a></p>
+  <p><a href="index.php?state=step3">Step 3 - Batch convert images</a></p>
+  <p><a href="index.php?state=step4">Step 4 - FTP images</a></p>
+  <p><a href='index.php?state=step5'>Step 5 - CSV Files in Omeka</a></p>
+  <p><a href='index.php?state=step6'>Step 6 - Clear Desktop</a></p>
   
 </nav>
 </div>

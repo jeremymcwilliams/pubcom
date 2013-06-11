@@ -41,8 +41,23 @@ putenv("DYLD_LIBRARY_PATH=" . getenv("MAGICK_HOME") . "/lib");
             case "step2":
                 $this->step2();
                 break;
+
+            case "step3":
+                $this->step3();
+                break;            
             
-            
+            case "step4":
+                $this->step4();
+                break;
+			
+			case "step5":
+                $this->step5();
+                break;
+
+			case "step6":
+                $this->step6();
+                break;
+			
 			case "processDirectory":
                 $_SESSION["currentDirectory"]=$_REQUEST["directory"];
 				$this->processDirectory();
@@ -117,30 +132,35 @@ putenv("DYLD_LIBRARY_PATH=" . getenv("MAGICK_HOME") . "/lib");
 			<p><input type="submit" value="Generate CSV Files" id="createCSV"></p>
 			</form>
 
-
-		
-	
-
-		
-
 		  <?php
 		
 		
 	}
 	
 	
-	function photoshopInstructions(){
+	function step3(){
 	    
         ?>
-        
+        <h3>Batch Convert Images with Photoshop</h3>
         <p>Now batch convert the images to jpegs using photoshop:</p>
         <p>
             <ul>
-                <li>Select Image processor from File->Scripts </li>
+                <li>In Photoshop, select Image Processor... from File->Scripts </li>
+                <li>Below are settings you should use for the Image Processor.
+                	<ul>
+                		<li>In section 1, select the folder on your Desktop containing the raw image files from Aperture.</li>
+                		<li>In section 2, select the 'coverted' folder on your Desktop, and make sure 'Keep folder structure' is checked.</li>
+                		<li>In section 3, duplicate the settings as show below.</li>
+                	</ul>
+                <li>When settings are ready, click 'Run'. Photoshop will then create jpg versions of the raw image files.</li>	
+                	 <br>
+                	<img src='img/image_processor_specs.png'>
+                	
+                </li>
                 
                 
             </ul>
-            
+           <p>When finished, <a href='index.php?state=step4'>move on the step 4</a>.</p> 
             
         </p>
         
@@ -148,6 +168,45 @@ putenv("DYLD_LIBRARY_PATH=" . getenv("MAGICK_HOME") . "/lib");
         
         
         <?php
+	}
+
+	function step4(){
+		?>
+		
+		<h3>FTP Raw and Converted Images to Server</h3>
+		
+		<p>Part 1: FTP Raw images:</p>
+		<ul>
+			<li>In FireFox, open a new tab, and click the FireFTP bookmark icon.</li>
+			<li>Click the drop-down menu in the upper left, select "pubcom-raw", and click 'Connect'.</li>
+			<li>In the left window, open the folder containing the raw image files, select the image files, and click the right-pointing arrow.<br/> This will start the FTP process.<br><img src='img/fireftp1.png'></li>
+			
+		</ul>
+		<p>Part 2: FTP Converted images:</p>
+	
+		<ul>
+			<li>When the process above is complete, click 'Disconnect'. </li>
+			<li>In the drop-down menu, select "pubcom-converted", and click "Connect".</li>
+			<li>Select all the jpg images in the left-hand window, and click the right pointing arrow, starting the FTP process.</li>
+			<li>When finished, move on to <a href='index.php?state=step5'>Step 5</a>.</li>
+			
+		</ul>
+	
+		
+		<?php
+		
+	}
+	
+	function step5(){
+		
+		
+		
+	}
+	
+	function step6(){
+		
+		
+		
 	}
 	
 	
@@ -356,8 +415,8 @@ class utilities{
 			foreach ($entry as $field=>$value){
 									
 						
-				 $field=iconv("UTF-16", "UTF-8",$field);		
-				 $value=iconv("UTF-16", "UTF-8",$value);	
+				 $field=iconv("UTF-16", "UTF-8",utf8_encode($field));		
+				 $value=iconv("UTF-16", "UTF-8",utf8_encode($value));	
 				
 				
 				if ($c==0){
