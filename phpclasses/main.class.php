@@ -214,10 +214,11 @@ putenv("DYLD_LIBRARY_PATH=" . getenv("MAGICK_HOME") . "/lib");
 		<ul>
 		<?php
 		$files=$_SESSION["csvfiles"];
+        asort($files);
         foreach ($files as $key){
             $file=$key["file"];
             $path=$key["path"];
-            echo "<li><input type='checkbox'> $file (Collection: $path)</li>";
+            echo "<li><input type='checkbox' class='cb'><span> $file (Collection: $path)</span></li>";
 
         }
 		
@@ -254,9 +255,9 @@ putenv("DYLD_LIBRARY_PATH=" . getenv("MAGICK_HOME") . "/lib");
 		
 		<p>Prep the Desktop for the next batch:</p>
 		<ul>
-		    <li>Empty/archive OmekaCSVFiles directory.</li>
-		    <li>Empty "converted" directory.</li>
-		    <li>Remove <?php echo $_SESSION["currentDirectory"]; ?> directory.</li>
+		    <li><span>Empty/archive OmekaCSVFiles directory.</span> <a id='emptycsv' class='deleteit'>do it!</a> </li>
+		    <li><span>Empty "converted" directory.</span> <a id='emptycsv' class='deleteit'>do it!</a></li>
+		    <li>Manually drag <?php echo $_SESSION["currentDirectory"]; ?> to the trash.</li>
 		    
 		    
 		</ul>
@@ -264,6 +265,9 @@ putenv("DYLD_LIBRARY_PATH=" . getenv("MAGICK_HOME") . "/lib");
 		
 		
 		<?php
+		//$this->emptyConverted();
+       // $this->emptyCSVs();
+       // $this->emptyShootDirectory();
 		
 		//var_dump($_SESSION);
 		
@@ -514,7 +518,7 @@ class utilities{
 						switch ($field) {
 							case "Title":   //title
 								//echo "<p>$field: $value</p>";
-								$csv_prep[$key]["Shoot"]=$value;
+								//$csv_prep[$key]["Shoot"]=$value;
                                 
                                 $newdata=$this->formatShoot($value, $key);
                                 
@@ -522,17 +526,25 @@ class utilities{
 								break;
 							
 							case "Contact Creator":
-								$csv_prep[$key]["Photographer"]=$value;
+								//$csv_prep[$key]["Photographer"]=$value;
                                 $coll_array[$coll][$key]["Photographer"]=$value;
 								break;
 							
 							case "Keywords":
+                                
+                                $keywords=str_replace(",", ", ", $value);
+                                $keywords=rtrim($keywords);
+                                
+                                $coll_array[$coll][$key][$field]=$keywords;
+                                
+                                
+                                break;
 							case "Instructions":
 							case "City":
 							case "State/Province":
 							case "Country":
 							case "Rating":
-								$csv_prep[$key][$field]=$value;
+								//$csv_prep[$key][$field]=$value;
                                 $coll_array[$coll][$key][$field]=$value;
 								break;
 							
@@ -844,6 +856,43 @@ original image resolution must be obtained/calculated
         else{return false;}
 
 	}
+
+    
+    function emptyConverted(){
+        $converted=pubcomda::parentdir."/converted";
+        $command="rm $converted/*.jpg";
+        if (exec($command)){            
+            return true;            
+        }
+
+    }
+    
+    function emptyCSVs(){
+        $csvs=pubcomda::parentdir."/OmekaCSVfiles";
+        $command="rm $csvs/*.csv";
+        if (exec($command)){            
+            return true;
+
+        }
+
+        
+    }
+    
+    function emptyShootDirectory(){
+        $dir=$_SESSION["currentDirectory"];
+        $e=pubcomda::parentdir."/$dir";
+        $command="rm $e/*";
+        echo $command;
+         if (exec($command)){            
+            return true;
+
+        }       
+        
+        
+    }
+
+
+
 
 
     /* FTP functions*/

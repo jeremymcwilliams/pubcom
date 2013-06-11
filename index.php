@@ -17,6 +17,9 @@
         <link rel="stylesheet" href="css/normalize.css">
         <link rel="stylesheet" href="css/main.css">
         <script src="js/vendor/modernizr-2.6.2.min.js"></script>
+          <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+           <script src="js/main.js"></script>
+
     </head>
     <body>
         <!--[if lt IE 7]>
@@ -30,11 +33,10 @@
 
 
 
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+      
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
         <script src="js/plugins.js"></script>
-        <script src="js/main.js"></script>
-
+       
 <div><h2>Aperture to Omeka Migration</h2></div>
 <div id="container">
 <div id='nav'>
@@ -55,7 +57,7 @@
 $x=new pubcomda();
 
 ?>   
-    
+ 
 </div>
 </div>
 
