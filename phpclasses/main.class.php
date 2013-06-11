@@ -91,7 +91,16 @@ putenv("DYLD_LIBRARY_PATH=" . getenv("MAGICK_HOME") . "/lib");
         
         <h3>Step 1: Export Shoot Files and Metadata from Aperture to the Desktop</h3>
         
-        
+        <p>(add some detailed instructions/screenshots here)</p>
+        <p>Steps:</p>
+        <ul>
+            <li>Choose Shoot directory from Aperture</li>
+            <li>Highlight all images</li>
+            <li>Click "export originals", to a folder on the Desktop</li>
+            <li>With images still selected, choose File->export->metadata</li>
+            <li>name the metadata file "metadata.txt", and save it to the same directory as the images.</li>
+            <li>Go to <a href="index.php?state=step2">Step 2</a>.</li>
+        </ul>
         
         
         <?php
@@ -197,14 +206,66 @@ putenv("DYLD_LIBRARY_PATH=" . getenv("MAGICK_HOME") . "/lib");
 		
 	}
 	
-	function step5(){ 
+	function step5(){
+	    ?> 
+		<h3>Process CSV Files in Omeka</h3>
 		
+		<p>The following files must be processed in Omeka:</p>
+		<ul>
+		<?php
+		$files=$_SESSION["csvfiles"];
+        foreach ($files as $key){
+            $file=$key["file"];
+            $path=$key["path"];
+            echo "<li><input type='checkbox'> $file (Collection: $path)</li>";
+
+        }
+		
+		?>
+		</ul>
+
+        <p>Using Firefox, go to the <a href='http://pubcomda.lclark.edu/admin' target='_blank'>pubcomda admin interface</a>, and sign in. For each file, follow the steps below:</p>
+        <ul>
+            <li>Click Csv Import on the left navigation menu.</li>
+            <li>Upload CSV File: select one of the files to upload, from the 'OmekaCSVFiles. folder on the Desktop.</li>
+            <li>Make sure "Automap Column Names to Elements" box is checked.</li>
+            <li>Select Item Type: choose "PubcomDA Images".</li>
+            <li>Select Collection: choose the collection associates with the CSV file. You may need to refer to the collection map, and/or refer to the collection .</li>
+            <li>Click "Next".</li>
+            <li>On the next page, make sure the "files" column is checked on the last row (file).</li>
+            <li>Click "Import CSV File". Refresh the page after 30 seconds or so to check the progress.</li>
+            <li>Once the status of the import is completed, click Csv Import on the menu, and repeat the process with the next file (or proceed to <a href='index.php?state=step6'>Step 6</a>).</li>
+            
+        </ul>
+
+
+		<?php
+		
+	
+
 		
 		
 	}
 	
 	function step6(){
+		?>
 		
+		<h3>Clear Desktop</h3>
+		
+		<p>Prep the Desktop for the next batch:</p>
+		<ul>
+		    <li>Empty/archive OmekaCSVFiles directory.</li>
+		    <li>Empty "converted" directory.</li>
+		    <li>Remove <?php echo $_SESSION["currentDirectory"]; ?> directory.</li>
+		    
+		    
+		</ul>
+		
+		
+		
+		<?php
+		
+		//var_dump($_SESSION);
 		
 		
 	}
@@ -226,6 +287,9 @@ class utilities{
     
     
     function processDirectory(){
+        
+        $_SESSION["csvfiles"]="";
+        
         
         if (isset($_REQUEST["directory"]) && !empty($_REQUEST["directory"])){
             $directory=$_REQUEST["directory"];
@@ -290,7 +354,7 @@ class utilities{
                     
                     $this->collectionArrayParse($a);
             
-
+                    echo "<p>Proceed to <a href='index.php?state=step3'>Step 3</a></p>";
             }
             else{
                 
@@ -300,10 +364,10 @@ class utilities{
             }
             
 
-            echo "<p><a href='index.php'>Start Again</a></p>";
+            #echo "<p><a href='index.php'>Start Again</a></p>";
         }
         
-        echo "<p><a href='index.php'>Go back and pick a directory.</a></p>";
+        #echo "<p><a href='index.php'>Go back and pick a directory.</a></p>";
         
         ?>
 
@@ -640,21 +704,23 @@ original image resolution must be obtained/calculated
     function collectionArrayParse($array){
 
            
-                
+            $c=0;    
            foreach ($array as $collection=>$data){
                        
-               echo "<p>Collection: $collection</p>";    
+              // echo "<p>Collection: $collection</p>";    
                if ($csv=$this->writeCSV($data, $collection)){
                    $path=$this->getCollectionPath($collection);
                    echo "<p>File created: $csv<br>($path)</p>";
-                   
+                   $_SESSION["csvfiles"][$c]["file"]=$csv;
+                   $_SESSION["csvfiles"][$c]["path"]=$path;
+                   $c++;
                   
                    
                    
                }
                 
 
-                echo "<hr>";   
+               // echo "<hr>";   
                    
 
            }     
@@ -734,16 +800,16 @@ original image resolution must be obtained/calculated
 		$copyright=pubcomda::copyrightNotice;
 		
 		$csv=$collection."_".$directory.".csv";
-		echo "<p>$csv</p>";
+		//echo "<p>$csv</p>";
 		$path="$dir/OmekaCSVfiles/$csv";
 		
-		echo count($array);	
+		//echo count($array);	
 		
 		$fp = fopen($path, 'w+');
 		
 			
 		$headings=array("Dublin Core:Title", "Item Type Metadata:Shoot", "Item Type Metadata:Keywords", "Item Type Metadata:Instructions", "Item Type Metadata:Date", "Item Type Metadata:Photographer", "Item Type Metadata:City", "Item Type Metadata:State/Province", 
-		"Item Type Metadata:Country", "Item Type Metadata:Usage Terms", "Item Type Metadata:Copyright Notice", "Item Type Metadata:Rating", "Dublin Core:Type", "Item Type Metadata:Maximum File Dimensions (print)", "file");
+		"Item Type Metadata:Country", "Item Type Metadata:Usage Terms", "Item Type Metadata:Copyright Notice", "Item Type Metadata:Rating", "Item Type Metadata:File Type", "Item Type Metadata:Maximum File Dimensions (print)", "file");
 		
 		fputcsv($fp, $headings);
 		
