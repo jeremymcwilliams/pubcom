@@ -96,7 +96,11 @@ putenv("DYLD_LIBRARY_PATH=" . getenv("MAGICK_HOME") . "/lib");
         <ul>
             <li>Choose Shoot directory from Aperture</li>
             <li>Highlight all images</li>
-            <li>Click "export originals", to a folder on the Desktop</li>
+            <li>Click "export originals", to a folder on the Desktop. Make sure the export settings are as follows:</li>
+            	<ul>
+            		<li>Subfolder Format: none</li>
+            		<li>Name Format: Original File Name</li>
+            	</ul>
             <li>With images still selected, choose File->export->metadata</li>
             <li>name the metadata file "metadata.txt", and save it to the same directory as the images.</li>
             <li>Go to <a href="index.php?state=step2">Step 2</a>.</li>
@@ -821,7 +825,7 @@ original image resolution must be obtained/calculated
 		
 			
 		$headings=array("Dublin Core:Title", "Item Type Metadata:Shoot", "Item Type Metadata:Keywords", "Item Type Metadata:Instructions", "Item Type Metadata:Date", "Item Type Metadata:Photographer", "Item Type Metadata:City", "Item Type Metadata:State/Province", 
-		"Item Type Metadata:Country", "Item Type Metadata:Usage Terms", "Item Type Metadata:Copyright Notice", "Item Type Metadata:Rating", "Item Type Metadata:File Type", "Item Type Metadata:Maximum File Dimensions (print)", "file");
+		"Item Type Metadata:Country", "Item Type Metadata:Usage Terms", "Item Type Metadata:Copyright Notice", "Item Type Metadata:Rating", "Item Type Metadata:File Type", "Item Type Metadata:Maximum File Dimensions (print at 300dpi)", "file");
 		
 		fputcsv($fp, $headings);
 		
