@@ -217,19 +217,39 @@ putenv("DYLD_LIBRARY_PATH=" . getenv("MAGICK_HOME") . "/lib");
 		<p>The following files must be processed in Omeka:</p>
 		<ul>
 		<?php
-		$files=$_SESSION["csvfiles"];
-        asort($files);
-        foreach ($files as $key){
-            $file=$key["file"];
-            $path=$key["path"];
-            echo "<li><input type='checkbox' class='cb'><span> $file (Collection: $path)</span></li>";
+		
+		if ($_SESSION["csvfiles"]){
+    		
+    		$files=$_SESSION["csvfiles"];
+            asort($files);
+            foreach ($files as $key){
+                $file=$key["file"];
+                $path=$key["path"];
+                echo "<li><input type='checkbox' class='cb'><span> $file (Collection: $path)</span></li>";
+    
+            }
 
-        }
 		
 		?>
 		</ul>
 
-        <p>Using Firefox, go to the <a href='http://pubcomda.lclark.edu/admin' target='_blank'>pubcomda admin interface</a>, and sign in. For each file, follow the steps below:</p>
+        <p>Using Firefox, go to the <a href='http://pubcomda.lclark.edu/admin' target='_blank'>pubcomda admin interface</a>, and sign in.
+            
+            <?php 
+            
+            if (file_exists("./omekainfo.php")){
+                   require_once("./omekainfo.php");
+                    echo "<br/>username: $username<br/>password $password";     
+                    
+                
+            }
+            
+            ?>
+            
+            </p> 
+            
+            
+        <p>For each file, follow the steps below:</p>
         <ul>
             <li>Click Csv Import on the left navigation menu.</li>
             <li>Upload CSV File: select one of the files to upload, from the 'OmekaCSVFiles. folder on the Desktop.</li>
@@ -245,7 +265,8 @@ putenv("DYLD_LIBRARY_PATH=" . getenv("MAGICK_HOME") . "/lib");
 
 
 		<?php
-		
+		        }
+        else{echo "<p>No files to process.</p>";}
 	
 
 		
