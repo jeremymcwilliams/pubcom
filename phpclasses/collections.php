@@ -3,267 +3,267 @@
     $collections=array(
         "ATH"=>array(
             "parentlabel"=>"Athletics",
-            "A"=>"Baseball",
-            "B"=>"Basketball",
-            "C"=>"Cross Country",
-            "D"=>"Football",
-            "E"=>"Golf",
-            "F"=>"Rowing",
-            "G"=>"Soccer",
-            "H"=>"Softball",
-            "I"=>"Swimming",
-            "J"=>"Tennis",
-            "K"=>"Track and Field",
-            "L"=>"Volleyball",
-            "X"=>"Recreational Activities"
+            "A"=>"Baseball (ATH-A)",
+            "B"=>"Basketball (ATH-B)",
+            "C"=>"Cross Country (ATH-C)",
+            "D"=>"Football (ATH-D)",
+            "E"=>"Golf (ATH-E)",
+            "F"=>"Rowing (ATH-F)",
+            "G"=>"Soccer (ATH-G)",
+            "H"=>"Softball (ATH-H)",
+            "I"=>"Swimming (ATH-I)",
+            "J"=>"Tennis (ATH-J)",
+            "K"=>"Track and Field (ATH-K)",
+            "L"=>"Volleyball (ATH-L)",
+            "X"=>"Recreational Activities (ATH-X)"
         ),
         "CAM"=>array(
             "parentlabel"=>"Undergraduate Campus",
-            "A"=>"Arials",
-            "B"=>"Architectural and Estate Details",
-            "C"=>"Lower Campus Landscapes",
-            "D"=>"Upper Campus Landscapes",
-            "E"=>"Nature",
-            "F"=>"Albany Quadrangle",
-            "G"=>"BoDine",
-            "H"=>"Evans Music Center",
-            "I"=>"Fir Acres Theatre",
-            "J"=>"Flanagan Chapel",
-            "K"=>"Gregg Pavillion",
-            "L"=>"Frank Manor House",
-            "M"=>"Gatehouse",
-            "N"=>"Miller Center for the Humanities",
-            "O"=>"Fields Center for the Visual Arts",
-            "P"=>"Olin Physics and Chemistry Building",
-            "Q"=>"Pamplin Sports Center",
+            "A"=>"Arials (CAM-A)",
+            "B"=>"Architectural and Estate Details (CAM-B)",
+            "C"=>"Lower Campus Landscapes (CAM-C)",
+            "D"=>"Upper Campus Landscapes (CAM-D)",
+            "E"=>"Nature (CAM-E)",
+            "F"=>"Albany Quadrangle (CAM-F)",
+            "G"=>"BoDine (CAM-G)",
+            "H"=>"Evans Music Center (CAM-H)",
+            "I"=>"Fir Acres Theatre (CAM-I)",
+            "J"=>"Flanagan Chapel (CAM-J)",
+            "K"=>"Gregg Pavillion (CAM-K)",
+            "L"=>"Frank Manor House (CAM-L)",
+            "M"=>"Gatehouse (CAM-M)",
+            "N"=>"Miller Center for the Humanities (CAM-N)",
+            "O"=>"Fields Center for the Visual Arts (CAM-O)",
+            "P"=>"Olin Physics and Chemistry Building (CAM-P)",
+            "Q"=>"Pamplin Sports Center (CAM-Q)",
             "R"=>array( /*Residence Halls*/
                 "parentlabel"=>"Residence Halls",
-                "1"=>"Akin",
-                "2"=>"Copeland",
-                "3"=>"East",
-                "4"=>"Forest",
-                "5"=>"Hartzfelt",
-                "6"=>"Howard",
-                "7"=>"Odell",
-                "8"=>"Platt",
-                "9"=>"Roberts Hall",
-                "10"=>"Stewart",
-                "11"=>"West"
+                "1"=>"Akin (CAM-R1)",
+                "2"=>"Copeland (CAM-R2)",
+                "3"=>"East (CAM-R3)",
+                "4"=>"Forest (CAM-R4)",
+                "5"=>"Hartzfelt (CAM-R5)",
+                "6"=>"Howard (CAM-R6)",
+                "7"=>"Odell (CAM-R7)",
+                "8"=>"Platt (CAM-R8)",
+                "9"=>"Roberts Hall (CAM-R9)",
+                "10"=>"Stewart (CAM-R10)",
+                "11"=>"West (CAM-R11)"
             ),
-            "S"=>"Templeton Campus Center",
-            "T"=>"Watzek Library",
-            "U"=>"Hoffman Gallery",
-            "V"=>"JR Howard Hall",
-            "W"=>"Cooley House"
+            "S"=>"Templeton Campus Center (CAM-S)",
+            "T"=>"Watzek Library (CAM-T)",
+            "U"=>"Hoffman Gallery (CAM-U)",
+            "V"=>"JR Howard Hall (CAM-V)",
+            "W"=>"Cooley House (CAM-W)"
         ),
         "PEO"=>array(
             "parentlabel"=>"People",
-            "A"=>"Group Portraits",
-            "B"=>"Individual Portraits",
+            "A"=>"Group Portraits (PEO-A)",
+            "B"=>"Individual Portraits (PEO-B)",
             "C"=>array( /* Undergraduate Students*/
                 "parentlabel"=>"Undergraduate Students",
                 "1"=>array( /*Academic*/
                 "parentlabel"=>"Academic",
-                    "a"=>"outdoors",
-                    "b"=>"indoors"
+                    "a"=>"outdoors (PEO-C1a)",
+                    "b"=>"indoors (PEO-C1b)"
                 ),
-                "2"=>"Non-academic",
+                "2"=>"Non-academic (PEO-C2)",
                 "3"=>array( /* Campus Living */
                 "parentlabel"=>"Undergraduate Students",
-                    "a"=>"outdoors",
-                    "b"=>"indoors"
+                    "a"=>"outdoors (PEO-C3a)",
+                    "b"=>"indoors (PEO-C3b)"
                 ),
-                "4"=>"Individual Prospects",
-                "5"=>"Group Portraits"
+                "4"=>"Individual Prospects (PEO-C4)",
+                "5"=>"Group Portraits (PEO-C5)"
             
             
             ),
-            "D"=>"Alumni Portraits",
-            "E"=>"Non Lewis and Clark people"       
+            "D"=>"Alumni Portraits (PEO-D)",
+            "E"=>"Non Lewis and Clark people (PEO-E)"       
         ),
         "DIV"=>array(
             "parentlabel"=>"Divisions",
             "A"=>array(/*Arts and Humanities*/
                 "parentlabel"=>"Arts and Humanities",
-                "1"=>"Art",
-                "2"=>"English",
-                "3"=>"Foreign Languages",
-                "4"=>"History",
-                "6"=>"Music",
-                "7"=>"Philosophy",
-                "8"=>"Religious Studies",
-                "9"=>"Theatre"
+                "1"=>"Art (DIV-A1)",
+                "2"=>"English (DIV-A2)",
+                "3"=>"Foreign Languages (DIV-A3)",
+                "4"=>"History (DIV-A4)",
+                "6"=>"Music (DIV-A6)",
+                "7"=>"Philosophy (DIV-A7)",
+                "8"=>"Religious Studies (DIV-A8)",
+                "9"=>"Theatre (DIV-A9)"
             ),
             "B"=>array( /* Math and Natural Sciences */
                 "parentlabel"=>"Math and Natural Sciences",
-                "1"=>"Biochemistry",
-                "2"=>"Biology",
-                "3"=>"Chemistry",
-                "4"=>"Geological Science",
-                "5"=>"Computer Science and Mathematics",
-                "6"=>"Physics"
+                "1"=>"Biochemistry (DIV-B1)",
+                "2"=>"Biology (DIV-B2)",
+                "3"=>"Chemistry (DIV-B3)",
+                "4"=>"Geological Science (DIV-B4)",
+                "5"=>"Computer Science and Mathematics (DIV-B5)",
+                "6"=>"Physics (DIV-B6)"
             ),
             "C"=>array( /* Social Sciences  */
                 "parentlabel"=>"Social Sciences",
-                "1"=>"Communications",
-                "2"=>"Economics",
-                "3"=>"International Affairs",
-                "4"=>"Political Science",
-                "5"=>"Psychology",
-                "6"=>"Sociology and Anthropology"
+                "1"=>"Communications (DIV-C1)",
+                "2"=>"Economics (DIV-C2)",
+                "3"=>"International Affairs (DIV-C3)",
+                "4"=>"Political Science (DIV-C4)",
+                "5"=>"Psychology (DIV-C5)",
+                "6"=>"Sociology and Anthropology (DIV-C6)"
             )        
         ),
         "PROG"=>array(
             "parentlabel"=>"Programs",
-            "A"=>"Overseas and Off Campus",
-            "B"=>"College Outdoors",
-            "C"=>"Student Leadership and Service",
-            "D"=>"Academic English Studies"
+            "A"=>"Overseas and Off Campus (PROG-A)",
+            "B"=>"College Outdoors (PROG-B)",
+            "C"=>"Student Leadership and Service (PROG-C)",
+            "D"=>"Academic English Studies (PROG-D)"
         ),
         "EVNT"=>array(
             "parentlabel"=>"Events",
             "A"=>array( /*Undergraduate Commencement*/
                 "parentlabel"=>"Undergraduate Commencement",
-                "1"=>"Ceremony",
-                "2"=>"Commencement Banquet"
+                "1"=>"Ceremony (EVNT-A1)",
+                "2"=>"Commencement Banquet (EVNT-A2)"
             ),
             "B"=>array( /* Alumni Events  */  
                 "parentlabel"=>"Alumni Events",          
-                "1"=>"Albany Society",
-                "2"=>"Alumni of Color",
-                "3"=>"Homecoming",
-                "4"=>"Alumni Honors Banquet",
-                "5"=>"Legacy Reception",
-                "6"=>"Reunion Weekend",
-                "7"=>"Receptions"
+                "1"=>"Albany Society (EVNT-B1)",
+                "2"=>"Alumni of Color (EVNT-B2)",
+                "3"=>"Homecoming (EVNT-B3)",
+                "4"=>"Alumni Honors Banquet (EVNT-B4)",
+                "5"=>"Legacy Reception (EVNT-B5)",
+                "6"=>"Reunion Weekend (EVNT-B6)",
+                "7"=>"Receptions (EVNT-B7)"
             ),
             "C"=>array(/* Student Run Events   */
                 "parentlabel"=>"Student Run Events",  
-                "1"=>"Symposia",
-                "2"=>"Hawaii Luau",
-                "3"=>"International Fair"
+                "1"=>"Symposia (EVNT-C1)",
+                "2"=>"Hawaii Luau (EVNT-C2)",
+                "3"=>"International Fair (EVNT-C3)"
             
             ),
             "D"=>array( /* Development Events    */
               "parentlabel"=>"Development Events",  
-                "1"=>"Philanthropy Leadership Dinner",
-                "2"=>"Rogers Scholars Lunch",
-                "3"=>"Scholarship Recognition Lunch"
+                "1"=>"Philanthropy Leadership Dinner (EVNT-D1)",
+                "2"=>"Rogers Scholars Lunch (EVNT-D2)",
+                "3"=>"Scholarship Recognition Lunch (EVNT-D3)"
             ),
             "E"=>array( /* Undergraduate Events   */
               "parentlabel"=>"Undergraduate Events",  
-                "1"=>"Family Weekend",
-                "2"=>"New Student Orientation",
-                "3"=>"Pio Fair"
+                "1"=>"Family Weekend (EVNT-E1)",
+                "2"=>"New Student Orientation (EVNT-E2)",
+                "3"=>"Pio Fair (EVNT-E3)"
             ),
             "F"=>array( /* Institution-wide Events   */
               "parentlabel"=>"Institution-wide Events",  
-                "1"=>"Day of Service",
-                "2"=>"Glassner Inauguration"           
+                "1"=>"Day of Service (EVNT-F1)",
+                "2"=>"Glassner Inauguration (EVNT-F2)"           
             ),
-            "G"=>"Other"
+            "G"=>"Other (EVNT-G)"
         ),
         "MISC"=>array(
             "parentlabel"=>"Miscellaneous",
-            "A"=>"College Owned Art",
-            "B"=>"Objects",
-            "C"=>"Location Off Campus",
+            "A"=>"College Owned Art (MISC-A)",
+            "B"=>"Objects (MISC-B)",
+            "C"=>"Location Off Campus (MISC-C)",
             "D"=>array( /* Chronicle Magazine   */
                 "parentlabel"=>"Chronicle Magazine", 
-                "1"=>"Winter 2011",
-                "2"=>"Spring 2011",
-                "3"=>"Fall 2011"
+                "1"=>"Winter 2011 (MISC-D1)",
+                "2"=>"Spring 2011 (MISC-D2)",
+                "3"=>"Fall 2011 (MISC-D3)"
             ),
-            "E"=>"Hoffman Gallery Shows",
+            "E"=>"Hoffman Gallery Shows (MISC-E)",
             "F"=>array( /* Print Project   */
                 "parentlabel"=>"Print Project",
-                "1"=>"CAS Viewbook"
+                "1"=>"CAS Viewbook (MISC-F1)"
             )
         ),
         "L-CAM"=>array(
             "parentlabel"=>"Law Campus",
-            "A"=>"Aerials",
-            "B"=>"Ampitheatre",
-            "C"=>"Architecture Details",
-            "D"=>"Boley Law Library",
-            "E"=>"Gantenbein",
-            "F"=>"Swindells Legal Research Center",
-            "G"=>"McCarty Classroom Complex",
-            "H"=>"Wood Hall"
+            "A"=>"Aerials (L-CAM-A)",
+            "B"=>"Ampitheatre (L-CAM-B)",
+            "C"=>"Architecture Details (L-CAM-C)",
+            "D"=>"Boley Law Library (L-CAM-D)",
+            "E"=>"Gantenbein (L-CAM-E)",
+            "F"=>"Swindells Legal Research Center (L-CAM-F)",
+            "G"=>"McCarty Classroom Complex (L-CAM-G)",
+            "H"=>"Wood Hall (L-CAM-H)"
          ),
         "L-PEO"=>array(
         "parentlabel"=>"Law People",
-            "A"=>"Group Portraits",
-            "B"=>"Individual Portraits",
+            "A"=>"Group Portraits (L-PEO-A)",
+            "B"=>"Individual Portraits (L-PEO-B)",
             "C"=> array( /* Students */
                 "parentlabel"=> "Students",
-                "1"=>"Indoors",
-                "2"=>"Outdoors",
-                "3"=>"Individual Portraits",
-                "4"=>"Off Campus"
+                "1"=>"Indoors (L-PEO-C1)",
+                "2"=>"Outdoors (L-PEO-C2)",
+                "3"=>"Individual Portraits (L-PEO-C3)",
+                "4"=>"Off Campus (L-PEO-C4)"
             ),
-            "D"=>"Alumni Portraits",
-            "E"=>"Faculty",
-            "F"=>"Non Lewis and Clark People"
+            "D"=>"Alumni Portraits (L-PEO-D)",
+            "E"=>"Faculty (L-PEO-E)",
+            "F"=>"Non Lewis and Clark People (L-PEO-F)"
         ),
         "L-EVNT"=>array(
             "parentlabel"=>"Law Events",
-            "A"=>"Commencement",
-            "B"=>"Receptions"            
+            "A"=>"Commencement (L-EVNT-A)",
+            "B"=>"Receptions (L-EVNT-A)"            
         ),
         "L-MISC"=>array(
             "parentlabel"=>"Law Miscellaneous",
-            "A"=>"Objects",
+            "A"=>"Objects (L-MISC-A)",
             "B"=>array( /* Advocate Magazine*/
                 "parentlabel"=> "Advocate Magazine",
-                "1"=>"Winter 2011"
+                "1"=>"Winter 2011 (L-MISC-B1)"
             ),
             "C"=>array( /* Print Project */
                 "parentlabel"=>"Print Project",
-                "1"=>"LAW Viewbook"
+                "1"=>"LAW Viewbook (L-MISC-C1)"
             )
         ),
       
 
         "G-CAM"=>array(
             "parentlabel"=>"Graduate Campus",
-            "A"=>"Rogers Hall",
-            "B"=>"Corbett House",
-            "C"=>"South Campus Chapel",
-            "D"=>"South Campus Landscapes"
+            "A"=>"Rogers Hall (G-CAM-A)",
+            "B"=>"Corbett House (G-CAM-B)",
+            "C"=>"South Campus Chapel (G-CAM-C)",
+            "D"=>"South Campus Landscapes (G-CAM-D)"
         ),
         "G-DEPT"=>array(
             "parentlabel"=>"Graduate Departments",
-            "A"=>"Counseling Psychology",
-            "B"=>"Educational Leadership",
-            "C"=>"Teacher Education"
+            "A"=>"Counseling Psychology (G-DEPT-A)",
+            "B"=>"Educational Leadership (G-DEPT-B)",
+            "C"=>"Teacher Education (G-DEPT-C)"
         
         ),
         "G-PROG"=>array(
             "parentlabel"=>"Graduate Programs",
-            "A"=>"Northwest Writing Institute"
+            "A"=>"Northwest Writing Institute (G-PROG-A)"
         ),
         "G-PEO"=>array(
             "parentlabel"=>"Graduate People",
-            "A"=>"Group Portraits",
-            "B"=>"Individual Portraits",
+            "A"=>"Group Portraits (G-PEO-A)",
+            "B"=>"Individual Portraits (G-PEO-B)",
             "C"=>array( /*Students*/
                 "parentlabel"=> "Students",
-                "1"=>"Outdoors",
-                "2"=>"Individual Portraits"
+                "1"=>"Outdoors (G-PEO-C1)",
+                "2"=>"Individual Portraits (G-PEO-C2)"
             ),
-            "D"=>"Non Lewis and Clark People"
+            "D"=>"Non Lewis and Clark People (G-PEO-D)"
         ),
         "G-EVNT"=>array(
             "parentlabel"=>"Graduate Events",
-            "A"=>"Commencement",
-            "B"=>"Convocation"
+            "A"=>"Commencement (G-EVNT-A)",
+            "B"=>"Convocation (G-EVNT-B)"
         ),
         "G-MISC"=>array(
             "parentlabel"=>"Graduate Miscellaneous",
             "A"=>array( /* Print Project */
                 "parentlabel"=> "Print Project",
-                "1"=>"GRAD Viewbook"
+                "1"=>"GRAD Viewbook (G-MISC-A1)"
             )
         
         )    
