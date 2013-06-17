@@ -736,24 +736,30 @@ original image resolution must be obtained/calculated
 
     function collectionArrayParse($array){
 
+           $limit=150;
+           
            
             $c=0;    
            foreach ($array as $collection=>$data){
-                       
-              // echo "<p>Collection: $collection</p>";    
-               $cc=count($data);
-               echo "<p>collection $collection: $cc</p>";
+               
+               $x=array_chunk($data, $limit);
+               $s=count($x);
+               if ($s==1){$z=0;}
+               else{$z=1;}
+               
+  
+               foreach ($x as $y){ 
                
                
-               if ($csv=$this->writeCSV($data, $collection)){
-                   $path=$this->getCollectionPath($collection);
-                   echo "<p>File created: $csv<br>($path)</p>";
-                   $_SESSION["csvfiles"][$c]["file"]=$csv;
-                   $_SESSION["csvfiles"][$c]["path"]=$path;
-                   $c++;
-                  
-                   
-                   
+                   if ($csv=$this->writeCSV($y, $collection, $z)){
+                       $path=$this->getCollectionPath($collection);
+                       echo "<p>File created: $csv<br>($path)</p>";
+                       $_SESSION["csvfiles"][$c]["file"]=$csv;
+                       $_SESSION["csvfiles"][$c]["path"]=$path;
+                       $c++;
+    
+                   }
+                   $z++;
                }
                 
 
@@ -765,7 +771,7 @@ original image resolution must be obtained/calculated
     }
  
  
-    function writeCSV($array, $collection){
+    function writeCSV($array, $collection, $suffix){
             
             //$fields=array();
             $directory=$this->directory;
@@ -776,7 +782,17 @@ original image resolution must be obtained/calculated
         $usageterms=pubcomda::usageTerms;
         $copyright=pubcomda::copyrightNotice;
         
-        $csv=$collection."_".$directory.".csv";
+        if ($suffix==0){
+            $csv=$collection."_".$directory.".csv";
+            
+        }
+        else{
+            $csv=$collection."_".$directory."_".$suffix.".csv";
+            
+        }
+
+        
+        
         //echo "<p>$csv</p>";
         $path="$dir/OmekaCSVfiles/$csv";
         
