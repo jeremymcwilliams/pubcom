@@ -242,7 +242,7 @@
             "B"=>"Corbett House (G-CAM-B)",
             "C"=>"South Campus Chapel (G-CAM-C)",
             "D"=>"South Campus Landscapes (G-CAM-D)",
-            "E"=>"Architectural Details"
+            "E"=>"Architectural Details (G-CAM-E)"
         ),
         "G-DEPT"=>array(
             "parentlabel"=>"Graduate Departments",

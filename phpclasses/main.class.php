@@ -87,6 +87,13 @@ putenv("DYLD_LIBRARY_PATH=" . getenv("MAGICK_HOME") . "/lib");
     
     function step1(){
         
+        if ($_REQUEST["clear"]=="true"){
+            $this->emptyConverted();
+            $this->emptyCSVs();
+            
+            
+        }
+        
         ?>
         
         <h3>Step 1: Export Shoot Files and Metadata from Aperture to the Desktop</h3>
@@ -225,7 +232,7 @@ putenv("DYLD_LIBRARY_PATH=" . getenv("MAGICK_HOME") . "/lib");
             foreach ($files as $key){
                 $file=$key["file"];
                 $path=$key["path"];
-                echo "<li><input type='checkbox' class='cb'><span> $file (Collection: $path)</span></li>";
+                echo "<li><p><input type='checkbox' class='cb'><span> $file <br/>(Collection: $path)</span></p></li>";
     
             }
 
@@ -280,12 +287,23 @@ putenv("DYLD_LIBRARY_PATH=" . getenv("MAGICK_HOME") . "/lib");
 		
 		<p>Prep the Desktop for the next batch:</p>
 		<ul>
-		    <li><span>Empty/archive OmekaCSVFiles directory.</span> <a id='OmekaCSVFiles' class='deleteit'>do it!</a> </li>
-		    <li><span>Empty "converted" directory.</span> <a id='converted' class='deleteit'>do it!</a></li>
-		    <li>Manually drag <?php echo $_SESSION["currentDirectory"]; ?> to the trash.</li>
+		    <li><span>Empty/archive OmekaCSVFiles directory.</span> </li>
+		    <li><span>Empty "converted" directory.</span> </li>
+		    
 		    
 		    
 		</ul>
+		
+		<form action="index.php">
+		    
+		    <input type="hidden" name="clear" value="true">
+		    <input type="submit" value="Clear both directories and start a new batch">
+		    
+		    
+		    
+		</form>
+		
+		<p>You'll have to manually drag <span style="font-style:italic;"></span><?php echo $_SESSION["currentDirectory"]; ?></span> to the trash.</p>
 		
 		
 		
@@ -735,7 +753,8 @@ original image resolution must be obtained/calculated
 
 
     function collectionArrayParse($array){
-
+            
+            /* limit of entries per CSV file*/
            $limit=150;
            
            
@@ -786,7 +805,7 @@ original image resolution must be obtained/calculated
             $csv=$collection."_".$directory.".csv";
              
         }
-        else{
+        else{ /* adds a suffix if multiple files per collection */
             $csv=$collection."_".$directory."_".$suffix.".csv";
             
         }
@@ -926,127 +945,15 @@ original image resolution must be obtained/calculated
         
     }
     
-    function emptyShootDirectory(){
-        $dir=$_SESSION["currentDirectory"];
-        $e=pubcomda::parentdir."/$dir";
-        $command="rm $e/*";
-        echo $command;
-         if (exec($command)){            
-            return true;
-
-        }       
-        
-        
-    }
 
 
 
 
 
-    /* FTP functions*/
-    function ftpConnect(){
-       
-       $directory= $_SESSION["currentDirectory"];
-       $dt=pubcomda::parentdir;
-        
-       require_once("./ftpinfo.php");
-         
-        
-        
 
-        // set up a connection or die
-        $conn_id = ftp_connect($ftp_server) or die("Couldn't connect to $ftp_server"); 
-        
-        
-        
-        
-        $login_result = ftp_login($conn_id, $ftp_user_name, $ftp_user_pass);
-        echo "<p>"/
-        $dir= "$dt/$directory"; 
-        echo $dir;   
-        /*
-        if ($handle = opendir($dir)) {
-
-            while (false !== ($entry = readdir($handle))) {
-                if ($entry != "." && $entry != ".." && $entry != ".DS_Store" && $entry !="metadata.txt") {
-                        
-                        $file="$dir/$entry";
-                        $remote_file="/pubcomda/raw/$entry";
-                      // upload a file
-                    if (ftp_put($conn_id, $remote_file, $file, FTP_ASCII)) {
-                     echo "successfully uploaded $file<br>";
-                    } else {
-                     echo "There was a problem while uploading $file. Use FireFTP!";
-                    }                              
-                    
-                    
-                }
-            
-            
-            
-            }
-        
-        
-        
-        } 
- */
- echo "</p>";
  
+
  
- 
-        
-
-        
-        // close the connection
-        ftp_close($conn_id);
-  
-    }
-
-/*
-    function convertImages($directory){
-        
-            
-            $dir= pubcomda::parentdir."/$directory";
-                    
-            if ($handle = opendir($dir)) {
-                $c=0;
-                while (false !== ($entry = readdir($handle))) {
-                    if ($entry != "." && $entry != ".." && $entry != ".DS_Store" && $entry !="metadata.txt") {
-                        //echo "$entry<br>";
-                        $x=explode(".", $entry);
-                        $pre=$x[0];
-                        $newfile=$pre.".jpg";
-                        
-                        $orig="/Library/WebServer/Documents/pubcom/$dir/$entry";
-                        
-                        $dest="/Library/WebServer/Documents/pubcom/".pubcomda::parentdir."/converted/$newfile";
-                       // echo "<p>$orig</p>";
-                        
-                        
-                        $command="convert $entry -resize 50% -quality 100 ../converted/$newfile";
-                    $command="convert $orig -resize 50% -quality 100 $dest";
-                        echo "$command<br>";
-                        //exec($command, $output, $return);
-
-                        $c++;
-
-                        
-                    }
-                            
-                        
-                    
-                }
-            
-            
-            
-                closedir($handle);
-            }           
-                   
-        echo "<p><a href='index.php'>Start Again</a></p>";
-        
-    }
-        
- */  
 		
 }
 ?>
