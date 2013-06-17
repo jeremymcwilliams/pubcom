@@ -280,8 +280,8 @@ putenv("DYLD_LIBRARY_PATH=" . getenv("MAGICK_HOME") . "/lib");
 		
 		<p>Prep the Desktop for the next batch:</p>
 		<ul>
-		    <li><span>Empty/archive OmekaCSVFiles directory.</span> <a id='emptycsv' class='deleteit'>do it!</a> </li>
-		    <li><span>Empty "converted" directory.</span> <a id='emptycsv' class='deleteit'>do it!</a></li>
+		    <li><span>Empty/archive OmekaCSVFiles directory.</span> <a id='OmekaCSVFiles' class='deleteit'>do it!</a> </li>
+		    <li><span>Empty "converted" directory.</span> <a id='converted' class='deleteit'>do it!</a></li>
 		    <li>Manually drag <?php echo $_SESSION["currentDirectory"]; ?> to the trash.</li>
 		    
 		    
@@ -375,11 +375,7 @@ class utilities{
                         closedir($handle);
                     }           
                     
-                    //asort($a);
-                    //asort($ex_array);         
-        
-                    
-                    //var_dump($a);
+
                     
                     $this->collectionArrayParse($a);
             
@@ -745,6 +741,10 @@ original image resolution must be obtained/calculated
            foreach ($array as $collection=>$data){
                        
               // echo "<p>Collection: $collection</p>";    
+               $cc=count($data);
+               echo "<p>collection $collection: $cc</p>";
+               
+               
                if ($csv=$this->writeCSV($data, $collection)){
                    $path=$this->getCollectionPath($collection);
                    echo "<p>File created: $csv<br>($path)</p>";
@@ -763,6 +763,68 @@ original image resolution must be obtained/calculated
            }     
 
     }
+ 
+ 
+    function writeCSV($array, $collection){
+            
+            //$fields=array();
+            $directory=$this->directory;
+            
+            
+            
+        $dir= pubcomda::parentdir;
+        $usageterms=pubcomda::usageTerms;
+        $copyright=pubcomda::copyrightNotice;
+        
+        $csv=$collection."_".$directory.".csv";
+        //echo "<p>$csv</p>";
+        $path="$dir/OmekaCSVfiles/$csv";
+        
+        //echo count($array);   
+        
+        $fp = fopen($path, 'w+');
+        
+            
+        $headings=array("Dublin Core:Title", "Item Type Metadata:Shoot", "Item Type Metadata:Keywords", "Item Type Metadata:Instructions", "Item Type Metadata:Date", "Item Type Metadata:Photographer", "Item Type Metadata:City", "Item Type Metadata:State/Province", 
+        "Item Type Metadata:Country", "Item Type Metadata:Usage Terms", "Item Type Metadata:Copyright Notice", "Item Type Metadata:Rating", "Item Type Metadata:File Type", "Item Type Metadata:Maximum File Dimensions (print at 300dpi)", "file");
+        
+        fputcsv($fp, $headings);
+        
+        
+        foreach ($array as $key=>$md){
+            
+            $fields=array();
+            
+            array_push($fields, $md["Filename"]);
+            array_push($fields, $md["Shoot"]);
+            array_push($fields, $md["Keywords"]);
+            array_push($fields, $md["Instructions"]);
+            array_push($fields, $md["Date"]);
+            array_push($fields, $md["Photographer"]);
+            array_push($fields, $md["City"]);
+            array_push($fields, $md["State/Province"]);
+            array_push($fields, $md["Country"]);
+            array_push($fields, $usageterms);
+            array_push($fields, $copyright);
+            array_push($fields, $md["Rating"]);
+            array_push($fields, $md["File Type"]);
+            array_push($fields, $md["Dimensions"]);
+            $filepath="http://pubcomda.lclark.edu/tempfiles/".$md["Filename"].".jpg";
+            array_push($fields, $filepath);
+            //var_dump($md);
+            
+            
+            fputcsv($fp, $fields);
+            
+        }
+        if ($fp){return $csv;}
+        else{return false;}
+
+    }
+ 
+ 
+ 
+ 
     
     function getCollectionPath($coll){
                 
@@ -825,62 +887,7 @@ original image resolution must be obtained/calculated
 
 
 
-	function writeCSV($array, $collection){
-			
-			//$fields=array();
-			$directory=$this->directory;
-			
-			
-			
-		$dir= pubcomda::parentdir;
-		$usageterms=pubcomda::usageTerms;
-		$copyright=pubcomda::copyrightNotice;
-		
-		$csv=$collection."_".$directory.".csv";
-		//echo "<p>$csv</p>";
-		$path="$dir/OmekaCSVfiles/$csv";
-		
-		//echo count($array);	
-		
-		$fp = fopen($path, 'w+');
-		
-			
-		$headings=array("Dublin Core:Title", "Item Type Metadata:Shoot", "Item Type Metadata:Keywords", "Item Type Metadata:Instructions", "Item Type Metadata:Date", "Item Type Metadata:Photographer", "Item Type Metadata:City", "Item Type Metadata:State/Province", 
-		"Item Type Metadata:Country", "Item Type Metadata:Usage Terms", "Item Type Metadata:Copyright Notice", "Item Type Metadata:Rating", "Item Type Metadata:File Type", "Item Type Metadata:Maximum File Dimensions (print at 300dpi)", "file");
-		
-		fputcsv($fp, $headings);
-		
-		
-		foreach ($array as $key=>$md){
-			
-			$fields=array();
-			
-			array_push($fields, $md["Filename"]);
-			array_push($fields, $md["Shoot"]);
-			array_push($fields, $md["Keywords"]);
-			array_push($fields, $md["Instructions"]);
-			array_push($fields, $md["Date"]);
-			array_push($fields, $md["Photographer"]);
-			array_push($fields, $md["City"]);
-			array_push($fields, $md["State/Province"]);
-			array_push($fields, $md["Country"]);
-			array_push($fields, $usageterms);
-			array_push($fields, $copyright);
-			array_push($fields, $md["Rating"]);
-			array_push($fields, $md["File Type"]);
-			array_push($fields, $md["Dimensions"]);
-			$filepath="http://pubcomda.lclark.edu/tempfiles/".$md["Filename"].".jpg";
-			array_push($fields, $filepath);
-			//var_dump($md);
-			
-			
-			fputcsv($fp, $fields);
-			
-		}
-        if ($fp){return $csv;}
-        else{return false;}
 
-	}
 
     
     function emptyConverted(){

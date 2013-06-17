@@ -48,7 +48,8 @@
                 "8"=>"Platt (CAM-R8)",
                 "9"=>"Roberts Hall (CAM-R9)",
                 "10"=>"Stewart (CAM-R10)",
-                "11"=>"West (CAM-R11)"
+                "11"=>"West (CAM-R11)",
+                "12"=>"Holmes (CAM-R12)"
             ),
             "S"=>"Templeton Campus Center (CAM-S)",
             "T"=>"Watzek Library (CAM-T)",
@@ -118,7 +119,8 @@
             "A"=>"Overseas and Off Campus (PROG-A)",
             "B"=>"College Outdoors (PROG-B)",
             "C"=>"Student Leadership and Service (PROG-C)",
-            "D"=>"Academic English Studies (PROG-D)"
+            "D"=>"Academic English Studies (PROG-D)",
+            "E"=>"Entrepreneurship (Winterim) (PROG-E)"
         ),
         "EVNT"=>array(
             "parentlabel"=>"Events",
@@ -172,7 +174,12 @@
                 "parentlabel"=>"Chronicle Magazine", 
                 "1"=>"Winter 2011 (MISC-D1)",
                 "2"=>"Spring 2011 (MISC-D2)",
-                "3"=>"Fall 2011 (MISC-D3)"
+                "3"=>"Fall 2011 (MISC-D3)",
+                "4"=>"Winter 2012 (MISC-D4)",
+                "5"=>"Spring 2012 (MISC-D5)",
+                "6"=>"Fall 2012 (MISC-D6)",
+                "7"=>"Winter 2013 (MISC-D7)",
+                "8"=>"Spring 2013 (MISC-D8)"
             ),
             "E"=>"Hoffman Gallery Shows (MISC-E)",
             "F"=>array( /* Print Project   */
@@ -216,7 +223,11 @@
             "A"=>"Objects (L-MISC-A)",
             "B"=>array( /* Advocate Magazine*/
                 "parentlabel"=> "Advocate Magazine",
-                "1"=>"Winter 2011 (L-MISC-B1)"
+                "1"=>"Winter 2011 (L-MISC-B1)",
+                "2"=>"Fall 2011 (L-MISC-B2)",
+                "3"=>"Spring 2012 (L-MISC-B3)",
+                "4"=>"Fall 2012 (L-MISC-B4)",
+                "5"=>"Spring 2013 (L-MISC-B5)"
             ),
             "C"=>array( /* Print Project */
                 "parentlabel"=>"Print Project",
@@ -230,7 +241,8 @@
             "A"=>"Rogers Hall (G-CAM-A)",
             "B"=>"Corbett House (G-CAM-B)",
             "C"=>"South Campus Chapel (G-CAM-C)",
-            "D"=>"South Campus Landscapes (G-CAM-D)"
+            "D"=>"South Campus Landscapes (G-CAM-D)",
+            "E"=>"Architectural Details"
         ),
         "G-DEPT"=>array(
             "parentlabel"=>"Graduate Departments",
@@ -250,14 +262,17 @@
             "C"=>array( /*Students*/
                 "parentlabel"=> "Students",
                 "1"=>"Outdoors (G-PEO-C1)",
-                "2"=>"Individual Portraits (G-PEO-C2)"
+                "2"=>"Individual Portraits (G-PEO-C2)",
+                "3"=>"Indoors (G-PEO-C3)"
             ),
-            "D"=>"Non Lewis and Clark People (G-PEO-D)"
+            "D"=>"Non Lewis and Clark People (G-PEO-D)",
+            "E"=>"Alumni"
         ),
         "G-EVNT"=>array(
             "parentlabel"=>"Graduate Events",
             "A"=>"Commencement (G-EVNT-A)",
-            "B"=>"Convocation (G-EVNT-B)"
+            "B"=>"Convocation (G-EVNT-B)",
+            "C"=>"Other (G-EVNT-C)"
         ),
         "G-MISC"=>array(
             "parentlabel"=>"Graduate Miscellaneous",
