@@ -784,7 +784,7 @@ original image resolution must be obtained/calculated
         
         if ($suffix==0){
             $csv=$collection."_".$directory.".csv";
-            
+             
         }
         else{
             $csv=$collection."_".$directory."_".$suffix.".csv";
