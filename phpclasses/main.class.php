@@ -697,11 +697,13 @@ class utilities{
 		//$file="CAM-V-0905-0002.tif";
 		//$folder="HowardHallRaw";
 		$im=pubcomda::parentdir."/$folder/$file";
-
+		
+		//$im='"$im"';
 
 		
-		$command="exiftool -php -ImageWidth -ImageHeight -DateTimeOriginal -MetadataDate $im";
+		$command="exiftool -php -ImageWidth -ImageHeight -DateTimeOriginal -MetadataDate \"$im\"";
 		
+		//echo "<p>$command</p>";
 		
 		exec($command, $output, $return);
 		
@@ -719,7 +721,7 @@ class utilities{
 		$he=$this->splitit($h);
 		$da=$this->splitit($dt);
 	
-	//	echo "<br>$source | $width | $height<br>";
+		//echo "<br>$source | $width | $height<br>";
 		
 		$width= intval($wi);
 		$height=intval($he);
