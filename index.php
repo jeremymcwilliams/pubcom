@@ -37,11 +37,11 @@
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
         <script src="js/plugins.js"></script>
        
-<div><h2>Aperture to Omeka Migration</h2></div>
+<div><h2>Processing a Shoot for Omeka</h2></div>
 <div id="container">
 <div id='nav'>
 <nav>
-  <p><a href="index.php?state=step1">Step 1 - Export from Aperture</a></p>
+  <p><a href="index.php?state=step1">Step 1 - Use Bridge to Add Metadata</a></p>
   <p><a href="index.php?state=step2">Step 2 - Generate CSV files</a></p>
   <p><a href="index.php?state=step3">Step 3 - Batch convert images</a></p>
   <p><a href="index.php?state=step4">Step 4 - FTP images</a></p>

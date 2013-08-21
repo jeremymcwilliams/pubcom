@@ -96,8 +96,8 @@ putenv("DYLD_LIBRARY_PATH=" . getenv("MAGICK_HOME") . "/lib");
         
         ?>
         
-        <h3>Step 1: Export Shoot Files and Metadata from Aperture to the Desktop</h3>
-        
+        <h3>Step 1: Add metadata to images in Adobe Bridge</h3>
+        <!--
         <p>(add some detailed instructions/screenshots here)</p>
         <p>Steps:</p>
         <ul>
@@ -112,7 +112,7 @@ putenv("DYLD_LIBRARY_PATH=" . getenv("MAGICK_HOME") . "/lib");
             <li>name the metadata file "metadata.txt", and save it to the same directory as the images.</li>
             <li>Go to <a href="index.php?state=step2">Step 2</a>.</li>
         </ul>
-        
+        -->
         
         <?php
         
@@ -399,12 +399,7 @@ class utilities{
             
                     echo "<p>Proceed to <a href='index.php?state=step3'>Step 3</a></p>";
             }
-            else{
-                
-                echo "<p>There is no metadata.txt file in $directory. Please export a metadata file from Aperture to this directory, and make sure it is titled 'metadata.txt'.</p>";
 
-                
-            }
             
 
             #echo "<p><a href='index.php'>Start Again</a></p>";
@@ -424,20 +419,7 @@ class utilities{
     }   
     
 	
-	
-	function metadataDotTextCheck($directory){
-			$dir= pubcomda::parentdir."/$directory";    
-			$md=$dir."/metadata.txt";
-			//echo $md;
-			
-			if (file_exists($md)){
-				$md_array=$this->parse_reports($md);
-				return $md_array;
-			}
-			else{return false;}			
 
-	}
-    
     
     
     /* for a file name (no extension), like "CAM-B-0410-0023", returns array $array["prefix"]="CAM", $array["suffix"]="B", $array["full"]="CAM-B"*/
@@ -616,30 +598,7 @@ class utilities{
 	}
 
 	
-	function parse_reports($filename){ 
-         
-            $mappings = array(); 
-            $id = fopen($filename, "r"); //open the file 
-            $data = fgetcsv($id, filesize($filename), "\t");  
-             
-            if(!$mappings){ 
-                $mappings = $data; 
-            } 
-             
-            while($data = fgetcsv($id, filesize($filename), "\t")){ 
-                if($data[0]){ 
-                    foreach($data as $key => $value) 
-                        $converted_data[$mappings[$key]] = $value; 
-                        $arr[] = $converted_data;  
-                         
-                }  
-            }   
-             
-            fclose($id); //close file 
-            //var_dump($arr);
-            
-            return $arr; 
-        }  	
+ 	
 	
 	function splitit($string){
 		
@@ -947,9 +906,47 @@ original image resolution must be obtained/calculated
         
     }
     
+/* OLD FUNCTIONS FROM INITIAL MIGRATION    */
+/*  
+    function metadataDotTextCheck($directory){
+            $dir= pubcomda::parentdir."/$directory";    
+            $md=$dir."/metadata.txt";
+            //echo $md;
+            
+            if (file_exists($md)){
+                $md_array=$this->parse_reports($md);
+                return $md_array;
+            }
+            else{return false;}         
 
-
-
+    }
+  */  
+/*
+ *  function parse_reports($filename){ 
+         
+            $mappings = array(); 
+            $id = fopen($filename, "r"); //open the file 
+            $data = fgetcsv($id, filesize($filename), "\t");  
+             
+            if(!$mappings){ 
+                $mappings = $data; 
+            } 
+             
+            while($data = fgetcsv($id, filesize($filename), "\t")){ 
+                if($data[0]){ 
+                    foreach($data as $key => $value) 
+                        $converted_data[$mappings[$key]] = $value; 
+                        $arr[] = $converted_data;  
+                         
+                }  
+            }   
+             
+            fclose($id); //close file 
+            //var_dump($arr);
+            
+            return $arr; 
+        } 
+ */
 
 
 
